@@ -1,1 +1,81 @@
-
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tank Battle 1990 - Test Runner</title>
+    <style>
+        body { font-family: monospace; margin: 20px; }
+        .test { margin: 10px 0; }
+        .pass { color: green; }
+        .fail { color: red; }
+    </style>
+</head>
+<body>
+    <h1>Tank Battle 1990 - Basic Tests</h1>
+    <div id="results"></div>
+    
+    <script>
+        const results = document.getElementById('results');
+        
+        function test(name, condition) {
+            const div = document.createElement('div');
+            div.className = 'test';
+            div.innerHTML = `<span class="${condition ? 'pass' : 'fail'}">${condition ? '✓' : '✗'}</span> ${name}`;
+            results.appendChild(div);
+        }
+        
+        // Test constants
+        test('CONSTANTS object exists', typeof CONSTANTS !== 'undefined');
+        test('Tile size is 32px', CONSTANTS && CONSTANTS.TILE_SIZE === 32);
+        test('Grid is 15x15', CONSTANTS && CONSTANTS.GRID_WIDTH === 15 && CONSTANTS.GRID_HEIGHT === 15);
+        test('Player has 3 lives', CONSTANTS && CONSTANTS.PLAYER_LIVES === 3);
+        test('Game time limit is 3 minutes', CONSTANTS && CONSTANTS.GAME_TIME_LIMIT === 180000);
+        
+        // Test game states
+        test('Game states defined', CONSTANTS && CONSTANTS.GAME_STATES && CONSTANTS.GAME_STATES.PLAYING);
+        test('Tank types defined', CONSTANTS && CONSTANTS.TANK_TYPES && CONSTANTS.TANK_TYPES.PLAYER);
+        test('Terrain types defined', CONSTANTS && CONSTANTS.TERRAIN && CONSTANTS.TERRAIN.BRICK);
+        
+        // Test classes exist
+        test('Grid class exists', typeof Grid !== 'undefined');
+        test('SpriteManager class exists', typeof SpriteManager !== 'undefined');
+        test('InputManager class exists', typeof InputManager !== 'undefined');
+        test('GameState class exists', typeof GameState !== 'undefined');
+        test('CollisionDetector class exists', typeof CollisionDetector !== 'undefined');
+        test('TerrainManager class exists', typeof TerrainManager !== 'undefined');
+        test('BulletManager class exists', typeof BulletManager !== 'undefined');
+        test('PlayerTank class exists', typeof PlayerTank !== 'undefined');
+        test('EnemyTank class exists', typeof EnemyTank !== 'undefined');
+        test('EnemyManager class exists', typeof EnemyManager !== 'undefined');
+        test('PowerUpManager class exists', typeof PowerUpManager !== 'undefined');
+        test('HUD class exists', typeof HUD !== 'undefined');
+        test('Game class exists', typeof Game !== 'undefined');
+        
+        // Test grid functionality
+        if (typeof Grid !== 'undefined') {
+            const grid = new Grid();
+            test('Grid pixel to grid conversion', grid.pixelToGrid(64, 64).x === 2 && grid.pixelToGrid(64, 64).y === 2);
+            test('Grid to pixel conversion', grid.gridToPixel(2, 2).x === 64 && grid.gridToPixel(2, 2).y === 64);
+            test('Grid bounds checking', grid.isInBounds(0, 0) && grid.isInBounds(14, 14) && !grid.isInBounds(15, 15));
+        }
+        
+        console.log('Tank Battle 1990 - Tests completed');
+    </script>
+    
+    <!-- Load game modules for testing -->
+    <script src="src/constants.js"></script>
+    <script src="src/grid.js"></script>
+    <script src="src/sprites.js"></script>
+    <script src="src/input.js"></script>
+    <script src="src/gamestate.js"></script>
+    <script src="src/collision.js"></script>
+    <script src="src/terrain.js"></script>
+    <script src="src/bullet.js"></script>
+    <script src="src/player.js"></script>
+    <script src="src/enemy.js"></script>
+    <script src="src/powerups.js"></script>
+    <script src="src/hud.js"></script>
+    <script src="src/game.js"></script>
+</body>
+</html>
