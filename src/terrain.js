@@ -7,6 +7,11 @@ class TerrainManager {
         this.terrainArmor = []; // Separate armor values for destructible terrain
         this.initializeTerrain();
         this.eagleDestroyed = false;
+        
+        // Shovel effect
+        this.eagleWallsStrengthened = false;
+        this.shovelTimer = 0;
+        this.originalEagleWalls = [];
     }
     
     // Initialize terrain grid
@@ -201,5 +206,71 @@ class TerrainManager {
                 this.spriteManager.drawSprite(ctx, eagleSprite, x, y);
                 break;
         }
+    }
+    
+    // Update shovel effect timer
+    update(deltaTime) {
+        if (this.eagleWallsStrengthened) {
+            this.shovelTimer -= deltaTime;
+            
+            if (this.shovelTimer <= 0) {
+                this.restoreEagleWalls();
+            }
+        }
+    }
+    
+    // Strengthen eagle walls (shovel effect)
+    strengthenEagleWalls() {
+        if (this.eagleWallsStrengthened) return; // Already strengthened
+        
+        // Store original wall positions and convert to steel
+        this.originalEagleWalls = [];
+        const eagleX = 7;
+        const eagleY = 13;
+        
+        // Wall positions around eagle
+        const wallPositions = [
+            [6, 12], [7, 12], [8, 12],
+            [6, 13], [8, 13],
+            [6, 14], [7, 14], [8, 14]
+        ];
+        
+        wallPositions.forEach(([x, y]) => {
+            if (this.grid.isInBounds(x, y)) {
+                this.originalEagleWalls.push({
+                    x: x,
+                    y: y,
+                    terrain: this.terrain[y][x],
+                    armor: this.terrainArmor[y][x]
+                });
+                
+                this.terrain[y][x] = CONSTANTS.TERRAIN.STEEL;
+                this.terrainArmor[y][x] = CONSTANTS.STEEL_ARMOR;
+            }
+        });
+        
+        this.eagleWallsStrengthened = true;
+        this.shovelTimer = CONSTANTS.SHOVEL_DURATION;
+    }
+    
+    // Restore original eagle walls
+    restoreEagleWalls() {
+        // Restore walls to fresh brick state (2 layers)
+        const wallPositions = [
+            [6, 12], [7, 12], [8, 12],
+            [6, 13], [8, 13],
+            [6, 14], [7, 14], [8, 14]
+        ];
+        
+        wallPositions.forEach(([x, y]) => {
+            if (this.grid.isInBounds(x, y)) {
+                this.terrain[y][x] = CONSTANTS.TERRAIN.BRICK;
+                this.terrainArmor[y][x] = CONSTANTS.BRICK_ARMOR;
+            }
+        });
+        
+        this.eagleWallsStrengthened = false;
+        this.shovelTimer = 0;
+        this.originalEagleWalls = [];
     }
 }
