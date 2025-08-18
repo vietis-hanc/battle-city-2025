@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tank Battle 1990 - VietIS AI Challenge 2025</title>
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/game-screen.css">
+    <link rel="stylesheet" href="css/menu.css">
+    <link rel="stylesheet" href="css/victory.css">
+    <link rel="stylesheet" href="css/game-over.css">
+</head>
+<body>
+    <div id="gameContainer">
+        <canvas id="gameCanvas" width="800" height="600"></canvas>
+        <div id="hud">
+            <div id="lives">Lives: <span id="livesCount">3</span></div>
+            <div id="enemies">Enemies: <span id="enemiesCount">20</span></div>
+            <div id="score">Score: <span id="scoreCount">0</span></div>
+            <div id="timer">Time: <span id="timeCount">3:00</span></div>
+        </div>
+    </div>
+    
+    <!-- Load game modules -->
+    <script src="src/constants.js"></script>
+    <script src="src/grid.js"></script>
+    <script src="src/sprites.js"></script>
+    <script src="src/input.js"></script>
+    <script src="src/gamestate.js"></script>
+    <script src="src/collision.js"></script>
+    <script src="src/terrain.js"></script>
+    <script src="src/bullet.js"></script>
+    <script src="src/player.js"></script>
+    <script src="src/enemy.js"></script>
+    <script src="src/powerups.js"></script>
+    <script src="src/hud.js"></script>
+    <script src="src/game.js"></script>
+</body>
+</html>

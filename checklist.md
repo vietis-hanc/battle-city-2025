@@ -1,4 +1,5 @@
 # Current Goal:
+Setting up basic game structure and core modules for Tank Battle 1990 game
 
 
 # Check lists
