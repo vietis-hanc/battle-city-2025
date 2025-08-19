@@ -86,11 +86,8 @@ class EnemyTank {
                 this.x = tempX;
                 this.y = tempY;
                 this.changeDirection();
-            } else {
-                const snapped = this.grid.snapToGrid(this.x, this.y);
-                this.x = snapped.x;
-                this.y = snapped.y;
             }
+            // Remove grid snapping from movement - let tanks move smoothly
         } else {
             this.changeDirection();
         }
@@ -268,7 +265,25 @@ class EnemyManager {
         
         // Try each spawn position
         for (const pos of spawnPositions) {
-            if (!this.collision.isPositionBlocked(pos.x, pos.y)) {
+            // Check if position is blocked by terrain
+            if (this.collision.isPositionBlocked(pos.x, pos.y)) {
+                continue;
+            }
+            
+            // Check if position is occupied by another tank (using collision detection)
+            let positionOccupied = false;
+            for (const existingEnemy of this.enemies) {
+                if (existingEnemy.active && 
+                    this.collision.checkRectCollision(
+                        pos.x, pos.y, CONSTANTS.TILE_SIZE, CONSTANTS.TILE_SIZE,
+                        existingEnemy.x, existingEnemy.y, CONSTANTS.TILE_SIZE, CONSTANTS.TILE_SIZE
+                    )) {
+                    positionOccupied = true;
+                    break;
+                }
+            }
+            
+            if (!positionOccupied) {
                 const enemy = new EnemyTank(
                     pos.x, pos.y, enemyType,
                     this.grid, this.spriteManager, 

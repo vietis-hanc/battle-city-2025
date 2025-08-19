@@ -86,10 +86,7 @@ class PlayerTank {
                     this.x = tempX;
                     this.y = tempY;
                 } else {
-                    // Snap to grid for clean movement
-                    const snapped = this.grid.snapToGrid(this.x, this.y);
-                    this.x = snapped.x;
-                    this.y = snapped.y;
+                    // Keep smooth movement - no grid snapping during movement
                 }
             }
         }

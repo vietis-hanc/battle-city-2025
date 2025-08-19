@@ -248,5 +248,5 @@ class Game {
 
 // Start the game when page loads
 window.addEventListener('load', () => {
-    new Game();
+    window.game = new Game();
 });
