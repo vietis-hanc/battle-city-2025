@@ -10,6 +10,7 @@ class Game {
         this.input = new InputManager();
         this.gameState = new GameState();
         this.hud = new HUD(this.gameState);
+        this.audioManager = new AudioManager();
         
         // Game objects
         this.terrain = null;
@@ -36,7 +37,7 @@ class Game {
             // Initialize game systems
             this.terrain = new TerrainManager(this.grid, this.spriteManager);
             this.collision = new CollisionDetector(this.terrain, this.grid);
-            this.bulletManager = new BulletManager(this.grid, this.spriteManager, this.collision, this.terrain);
+            this.bulletManager = new BulletManager(this.grid, this.spriteManager, this.collision, this.terrain, this.audioManager);
             
             // Initialize player tank at bottom center
             const playerStartX = 6 * CONSTANTS.TILE_SIZE;
@@ -86,6 +87,11 @@ class Game {
         
         // Handle input for menu/pause states
         if (this.gameState.currentState === CONSTANTS.GAME_STATES.MENU) {
+            if (this.input.isEnterPressed()) {
+                this.startNewGame();
+            }
+        } else if (this.gameState.currentState === CONSTANTS.GAME_STATES.GAME_OVER ||
+                   this.gameState.currentState === CONSTANTS.GAME_STATES.VICTORY) {
             if (this.input.isEnterPressed()) {
                 this.startNewGame();
             }
@@ -197,8 +203,10 @@ class Game {
     // Check game end conditions
     checkGameEndConditions() {
         if (this.gameState.currentState === CONSTANTS.GAME_STATES.GAME_OVER) {
+            this.audioManager.play('gameOver');
             this.hud.showGameOver();
         } else if (this.gameState.currentState === CONSTANTS.GAME_STATES.VICTORY) {
+            this.audioManager.play('statistics');
             this.hud.showVictory();
         }
     }
@@ -207,6 +215,9 @@ class Game {
     startNewGame() {
         this.gameState.startNewGame();
         this.hud.reset();
+        
+        // Play start sound
+        this.audioManager.play('stageStart');
         
         // Reset all game objects
         this.terrain = new TerrainManager(this.grid, this.spriteManager);
@@ -236,12 +247,13 @@ class Game {
         this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
         
         if (this.gameState.currentState === CONSTANTS.GAME_STATES.PLAYING) {
-            // Render game objects
-            this.terrain.render(this.ctx);
+            // Render game objects in correct z-order
+            this.terrain.renderBackground(this.ctx); // Render everything except trees
             this.powerUpManager.render(this.ctx);
             this.playerTank.render(this.ctx);
             this.enemyManager.render(this.ctx);
             this.bulletManager.render(this.ctx);
+            this.terrain.renderForeground(this.ctx); // Render trees on top
         }
     }
 }

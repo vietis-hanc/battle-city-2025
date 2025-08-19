@@ -174,16 +174,36 @@ class TerrainManager {
         return false;
     }
     
-    // Render terrain
-    render(ctx) {
+    // Render terrain background (everything except trees)
+    renderBackground(ctx) {
         for (let y = 0; y < this.grid.height; y++) {
             for (let x = 0; x < this.grid.width; x++) {
                 const terrainType = this.terrain[y][x];
-                const pixelPos = this.grid.gridToPixel(x, y);
-                
-                this.renderTerrainTile(ctx, terrainType, pixelPos.x, pixelPos.y);
+                if (terrainType !== CONSTANTS.TERRAIN.TREES) {
+                    const pixelPos = this.grid.gridToPixel(x, y);
+                    this.renderTerrainTile(ctx, terrainType, pixelPos.x, pixelPos.y);
+                }
             }
         }
+    }
+    
+    // Render terrain foreground (trees on top)
+    renderForeground(ctx) {
+        for (let y = 0; y < this.grid.height; y++) {
+            for (let x = 0; x < this.grid.width; x++) {
+                const terrainType = this.terrain[y][x];
+                if (terrainType === CONSTANTS.TERRAIN.TREES) {
+                    const pixelPos = this.grid.gridToPixel(x, y);
+                    this.renderTerrainTile(ctx, terrainType, pixelPos.x, pixelPos.y);
+                }
+            }
+        }
+    }
+    
+    // Render terrain (keep for backward compatibility)
+    render(ctx) {
+        this.renderBackground(ctx);
+        this.renderForeground(ctx);
     }
     
     // Render a single terrain tile

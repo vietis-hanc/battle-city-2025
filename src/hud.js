@@ -81,15 +81,60 @@ class HUD {
     
     // Show game over screen
     showGameOver() {
-        this.showOverlay('Game Over', `Final Score: ${this.gameState.score}`, 'game-over');
+        this.showEnhancedOverlay('game-over', 'Game Over', this.gameState.score);
     }
     
     // Show victory screen
     showVictory() {
-        const message = this.gameState.enemiesRemaining <= 0 ? 
+        const victoryReason = this.gameState.enemiesRemaining <= 0 ? 
             'All Enemies Defeated!' : 
             'Time\'s Up - Base Protected!';
-        this.showOverlay('Victory!', `${message}\nFinal Score: ${this.gameState.score}`, 'victory');
+        this.showEnhancedOverlay('victory', victoryReason, this.gameState.score);
+    }
+    
+    // Show enhanced overlay with images
+    showEnhancedOverlay(type, title, score) {
+        this.hideOverlay();
+        
+        const overlay = document.createElement('div');
+        overlay.id = 'gameOverlay';
+        overlay.className = `game-overlay ${type}`;
+        
+        const overlayContent = document.createElement('div');
+        overlayContent.className = 'overlay-content';
+        
+        // Add appropriate image
+        if (type === 'game-over') {
+            const img = document.createElement('img');
+            img.src = 'images/game_over.png';
+            img.className = 'game-over-image';
+            img.alt = 'Game Over';
+            overlayContent.appendChild(img);
+        } else if (type === 'victory') {
+            const img = document.createElement('img');
+            img.src = 'images/flag.png';
+            img.className = 'victory-flag';
+            img.alt = 'Victory';
+            overlayContent.appendChild(img);
+        }
+        
+        const titleElement = document.createElement('h2');
+        titleElement.textContent = title;
+        
+        const scoreElement = document.createElement('div');
+        scoreElement.className = 'score-display';
+        scoreElement.textContent = `Final Score: ${score}`;
+        
+        const restartElement = document.createElement('div');
+        restartElement.className = 'restart-prompt';
+        restartElement.textContent = 'Press Enter to Play Again';
+        
+        overlayContent.appendChild(titleElement);
+        overlayContent.appendChild(scoreElement);
+        overlayContent.appendChild(restartElement);
+        
+        overlay.appendChild(overlayContent);
+        document.body.appendChild(overlay);
     }
     
     // Show pause screen
@@ -132,11 +177,42 @@ class HUD {
     
     // Show start screen
     showStartScreen() {
-        this.showOverlay(
-            'Tank Battle 1990',
-            'Arrow Keys: Move\nSpace: Shoot\nEnter: Start Game\n\nProtect the Eagle!\nDefeat 20 enemy tanks!',
-            'start-screen'
-        );
+        this.hideOverlay();
+        
+        const overlay = document.createElement('div');
+        overlay.id = 'gameOverlay';
+        overlay.className = 'game-overlay start-screen';
+        
+        const overlayContent = document.createElement('div');
+        overlayContent.className = 'overlay-content';
+        
+        // Add Battle City logo
+        const logo = document.createElement('img');
+        logo.src = 'images/battle_city.png';
+        logo.className = 'title-logo';
+        logo.alt = 'Battle City';
+        
+        const instructions = document.createElement('div');
+        instructions.className = 'instructions';
+        instructions.innerHTML = `
+            Arrow Keys: Move Tank<br>
+            Space: Shoot<br>
+            ESC: Pause Game<br><br>
+            Protect the Eagle!<br>
+            Defeat 20 enemy tanks!<br>
+            You have 3 minutes!
+        `;
+        
+        const enterPrompt = document.createElement('div');
+        enterPrompt.className = 'press-enter';
+        enterPrompt.textContent = 'Press Enter to Start';
+        
+        overlayContent.appendChild(logo);
+        overlayContent.appendChild(instructions);
+        overlayContent.appendChild(enterPrompt);
+        
+        overlay.appendChild(overlayContent);
+        document.body.appendChild(overlay);
     }
     
     // Reset HUD for new game

@@ -49,18 +49,25 @@ class Bullet {
 }
 
 class BulletManager {
-    constructor(grid, spriteManager, collisionDetector, terrain) {
+    constructor(grid, spriteManager, collisionDetector, terrain, audioManager) {
         this.bullets = [];
         this.grid = grid;
         this.spriteManager = spriteManager;
         this.collision = collisionDetector;
         this.terrain = terrain;
+        this.audioManager = audioManager;
     }
     
     // Create a new bullet
     createBullet(x, y, direction, power, team) {
         const bullet = new Bullet(x, y, direction, power, team, this.grid, this.spriteManager);
         this.bullets.push(bullet);
+        
+        // Play shot sound
+        if (this.audioManager) {
+            this.audioManager.play('bulletShot');
+        }
+        
         return bullet;
     }
     
@@ -101,6 +108,11 @@ class BulletManager {
     handleTerrainHit(bullet, terrainHit) {
         bullet.active = false;
         
+        // Play hit sound
+        if (this.audioManager) {
+            this.audioManager.play('bulletHit1');
+        }
+        
         if (terrainHit.terrain) {
             // Damage terrain
             const destroyed = this.terrain.damageTerrain(
@@ -112,6 +124,9 @@ class BulletManager {
             // Handle eagle destruction
             if (terrainHit.terrain === CONSTANTS.TERRAIN.EAGLE) {
                 // Game over - eagle destroyed
+                if (this.audioManager) {
+                    this.audioManager.play('explosion2');
+                }
                 return { eagleDestroyed: true };
             }
         }
@@ -122,6 +137,11 @@ class BulletManager {
     // Handle bullet hitting tank
     handleTankHit(bullet, tank) {
         bullet.active = false;
+        
+        // Play explosion sound
+        if (this.audioManager) {
+            this.audioManager.play('explosion1');
+        }
         
         // Damage tank
         tank.takeDamage(bullet.power);

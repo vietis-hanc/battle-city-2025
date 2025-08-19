@@ -17,7 +17,7 @@ class EnemyTank {
         this.moveTimer = 0;
         this.directionChangeInterval = Math.random() * 1000 + 1500;
         this.shootTimer = 0;
-        this.shootInterval = Math.random() * 2000 + 1000;
+        this.shootInterval = Math.random() * 800 + 600; // Increased firing rate
         this.stuckTimer = 0;
         this.lastPosition = { x: this.x, y: this.y };
         
@@ -95,10 +95,10 @@ class EnemyTank {
     
     handleShooting(playerTank) {
         if (this.shootTimer >= this.shootInterval) {
-            let shootChance = 0.1;
+            let shootChance = 0.2; // Increased base chance from 0.1 to 0.2
             
             if (this.canSeePlayer(playerTank)) {
-                shootChance = 0.8;
+                shootChance = 0.9; // Increased from 0.8 to 0.9
             }
             
             if (Math.random() < shootChance) {
@@ -106,7 +106,7 @@ class EnemyTank {
             }
             
             this.shootTimer = 0;
-            this.shootInterval = Math.random() * 2000 + 1000;
+            this.shootInterval = Math.random() * 800 + 600; // Reduced from 2000+1000 to 800+600
         }
     }
     

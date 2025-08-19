@@ -4,8 +4,8 @@ const CONSTANTS = {
     TILE_SIZE: 32,
     GRID_WIDTH: 15,
     GRID_HEIGHT: 15,
-    CANVAS_WIDTH: 800,
-    CANVAS_HEIGHT: 600,
+    CANVAS_WIDTH: 480, // 15 * 32 = 480
+    CANVAS_HEIGHT: 480, // 15 * 32 = 480
     
     // Game timing
     GAME_TIME_LIMIT: 180000, // 3 minutes in milliseconds
