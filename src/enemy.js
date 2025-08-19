@@ -310,6 +310,16 @@ class EnemyManager {
         return this.enemies.filter(enemy => enemy.active);
     }
     
+    // Get total remaining enemies (active + in queue)
+    getTotalRemainingEnemies() {
+        return this.getActiveEnemies().length + this.spawnQueue.length;
+    }
+    
+    // Get remaining count for HUD (alias for compatibility)
+    getRemainingCount() {
+        return this.getTotalRemainingEnemies();
+    }
+    
     // Get remaining enemies count
     getRemainingCount() {
         return this.spawnQueue.length + this.getActiveEnemies().length;

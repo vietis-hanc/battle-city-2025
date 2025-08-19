@@ -119,6 +119,12 @@ class Game {
                 // Update enemies
                 this.enemyManager.update(deltaTime, this.playerTank);
                 
+                // Check if all enemies defeated
+                if (this.enemyManager.getTotalRemainingEnemies() <= 0) {
+                    this.gameState.gameWon = true;
+                    this.gameState.currentState = CONSTANTS.GAME_STATES.VICTORY;
+                }
+                
                 // Update bullets and handle collisions
                 this.updateBullets(deltaTime);
                 
