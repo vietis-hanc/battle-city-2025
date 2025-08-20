@@ -2,7 +2,7 @@
 <html lang="vi">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Tank Battle 1990 - VietIS AI Challenge 2025</title>
     <link rel="stylesheet" href="css/main.css">
     <link rel="stylesheet" href="css/game-screen.css">
@@ -17,10 +17,14 @@
     <div id="gameContainer">
         <canvas id="gameCanvas" width="480" height="480"></canvas>
         <div id="hud">
-            <div id="lives">Lives: <span id="livesCount">3</span></div>
-            <div id="enemies">Enemies: <span id="enemiesCount">20</span></div>
-            <div id="score">Score: <span id="scoreCount">0</span></div>
-            <div id="timer">Time: <span id="timeCount">3:00</span></div>
+            <div class="hud-line-1">
+                <div id="lives">Lives: <span id="livesCount">3</span></div>
+                <div id="enemies">Enemies: <span id="enemiesCount">20</span></div>
+            </div>
+            <div class="hud-line-2">
+                <div id="score">Score: <span id="scoreCount">0</span></div>
+                <div id="timer">Time: <span id="timeCount">3:00</span></div>
+            </div>
         </div>
     </div>
     
