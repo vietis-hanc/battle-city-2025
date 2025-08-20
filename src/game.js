@@ -12,6 +12,9 @@ class Game {
         this.hud = new HUD(this.gameState);
         this.audioManager = new AudioManager();
         
+        // Initialize mobile controls
+        this.mobileControls = new MobileControls(this.input);
+        
         // Game objects
         this.terrain = null;
         this.collision = null;

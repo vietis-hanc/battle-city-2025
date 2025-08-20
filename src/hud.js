@@ -81,15 +81,81 @@ class HUD {
     
     // Show game over screen
     showGameOver() {
-        this.showEnhancedOverlay('game-over', 'Game Over', this.gameState.score);
+        this.hideOverlay();
+        
+        const overlay = document.createElement('div');
+        overlay.id = 'gameOverlay';
+        overlay.className = 'game-overlay retro-game-over';
+        
+        const overlayContent = document.createElement('div');
+        overlayContent.className = 'retro-overlay-content';
+        
+        // Game Over image
+        const gameOverImg = document.createElement('img');
+        gameOverImg.src = 'images/game_over.png';
+        gameOverImg.className = 'retro-game-over-image';
+        gameOverImg.alt = 'Game Over';
+        
+        // Score display
+        const scoreElement = document.createElement('div');
+        scoreElement.className = 'retro-score-display';
+        scoreElement.textContent = `SCORE: ${this.gameState.score}`;
+        
+        // Restart prompt
+        const restartElement = document.createElement('div');
+        restartElement.className = 'retro-restart-prompt';
+        restartElement.textContent = 'PUSH START BUTTON';
+        
+        overlayContent.appendChild(gameOverImg);
+        overlayContent.appendChild(scoreElement);
+        overlayContent.appendChild(restartElement);
+        
+        overlay.appendChild(overlayContent);
+        document.body.appendChild(overlay);
     }
     
     // Show victory screen
     showVictory() {
+        this.hideOverlay();
+        
+        const overlay = document.createElement('div');
+        overlay.id = 'gameOverlay';
+        overlay.className = 'game-overlay retro-victory';
+        
+        const overlayContent = document.createElement('div');
+        overlayContent.className = 'retro-overlay-content';
+        
+        // Victory flag
+        const flag = document.createElement('img');
+        flag.src = 'images/flag.png';
+        flag.className = 'retro-victory-flag';
+        flag.alt = 'Victory';
+        
+        // Victory text
+        const victoryText = document.createElement('div');
+        victoryText.className = 'retro-victory-text';
         const victoryReason = this.gameState.enemiesRemaining <= 0 ? 
-            'All Enemies Defeated!' : 
-            'Time\'s Up - Base Protected!';
-        this.showEnhancedOverlay('victory', victoryReason, this.gameState.score);
+            'MISSION ACCOMPLISHED!' : 
+            'BASE DEFENDED!';
+        victoryText.textContent = victoryReason;
+        
+        // Score display
+        const scoreElement = document.createElement('div');
+        scoreElement.className = 'retro-score-display';
+        scoreElement.textContent = `FINAL SCORE: ${this.gameState.score}`;
+        
+        // Restart prompt
+        const restartElement = document.createElement('div');
+        restartElement.className = 'retro-restart-prompt';
+        restartElement.textContent = 'PUSH START BUTTON';
+        
+        overlayContent.appendChild(flag);
+        overlayContent.appendChild(victoryText);
+        overlayContent.appendChild(scoreElement);
+        overlayContent.appendChild(restartElement);
+        
+        overlay.appendChild(overlayContent);
+        document.body.appendChild(overlay);
     }
     
     // Show enhanced overlay with images
@@ -181,35 +247,58 @@ class HUD {
         
         const overlay = document.createElement('div');
         overlay.id = 'gameOverlay';
-        overlay.className = 'game-overlay start-screen';
+        overlay.className = 'game-overlay retro-start-screen';
         
         const overlayContent = document.createElement('div');
-        overlayContent.className = 'overlay-content';
+        overlayContent.className = 'retro-overlay-content';
         
-        // Add Battle City logo
+        // Battle City logo
         const logo = document.createElement('img');
         logo.src = 'images/battle_city.png';
-        logo.className = 'title-logo';
+        logo.className = 'retro-title-logo';
         logo.alt = 'Battle City';
         
-        const instructions = document.createElement('div');
-        instructions.className = 'instructions';
-        instructions.innerHTML = `
-            Arrow Keys: Move Tank<br>
-            Space: Shoot<br>
-            ESC: Pause Game<br><br>
-            Protect the Eagle!<br>
-            Defeat 20 enemy tanks!<br>
-            You have 3 minutes!
-        `;
+        // Retro text content
+        const gameTitle = document.createElement('div');
+        gameTitle.className = 'retro-game-title';
+        gameTitle.textContent = 'TANK BATTLE 1990';
         
-        const enterPrompt = document.createElement('div');
-        enterPrompt.className = 'press-enter';
-        enterPrompt.textContent = 'Press Enter to Start';
+        const romanOne = document.createElement('div');
+        romanOne.className = 'retro-level-indicator';
+        const romanImg = document.createElement('img');
+        romanImg.src = 'images/roman_one.png';
+        romanImg.className = 'roman-numeral';
+        romanImg.alt = 'I';
+        romanOne.appendChild(romanImg);
         
+        const playerText = document.createElement('div');
+        playerText.className = 'retro-player-text';
+        playerText.textContent = '1 PLAYER';
+        
+        // Copyright notice
+        const copyright = document.createElement('div');
+        copyright.className = 'retro-copyright';
+        const copyrightImg = document.createElement('img');
+        copyrightImg.src = 'images/copyright.png';
+        copyrightImg.className = 'copyright-image';
+        copyrightImg.alt = '©';
+        const copyrightText = document.createElement('span');
+        copyrightText.textContent = ' 1985 NAMCO LTD.';
+        copyright.appendChild(copyrightImg);
+        copyright.appendChild(copyrightText);
+        
+        // Start prompt
+        const startPrompt = document.createElement('div');
+        startPrompt.className = 'retro-start-prompt';
+        startPrompt.textContent = 'PUSH START BUTTON';
+        
+        // Assembly
         overlayContent.appendChild(logo);
-        overlayContent.appendChild(instructions);
-        overlayContent.appendChild(enterPrompt);
+        overlayContent.appendChild(gameTitle);
+        overlayContent.appendChild(romanOne);
+        overlayContent.appendChild(playerText);
+        overlayContent.appendChild(copyright);
+        overlayContent.appendChild(startPrompt);
         
         overlay.appendChild(overlayContent);
         document.body.appendChild(overlay);
