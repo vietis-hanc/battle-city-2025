@@ -7,7 +7,7 @@ class Explosion {
         this.active = true;
         this.frame = 0;
         this.frameTimer = 0;
-        this.frameInterval = 100; // 100ms per frame
+        this.frameInterval = 120; // 120ms per frame for slightly longer visibility
         this.maxFrames = this.getMaxFrames();
         this.spriteManager = spriteManager;
     }

@@ -109,9 +109,12 @@ class BulletManager {
     handleTerrainHit(bullet, terrainHit) {
         bullet.active = false;
         
-        // Create explosion effect
+        // Create explosion effect at bullet center position
         if (this.explosionManager) {
-            this.explosionManager.createBulletExplosion(bullet.x - 8, bullet.y - 8);
+            // Center the explosion on the impact point
+            const explosionX = bullet.x - 12; // Center 32px explosion on 8px bullet
+            const explosionY = bullet.y - 12;
+            this.explosionManager.createBulletExplosion(explosionX, explosionY);
         }
         
         // Play hit sound
@@ -151,9 +154,11 @@ class BulletManager {
     handleTankHit(bullet, tank) {
         bullet.active = false;
         
-        // Create explosion effect on tank
+        // Create explosion effect on tank center
         if (this.explosionManager) {
-            this.explosionManager.createTankExplosion(tank.x, tank.y);
+            const explosionX = tank.x;
+            const explosionY = tank.y;
+            this.explosionManager.createTankExplosion(explosionX, explosionY);
         }
         
         // Play explosion sound
