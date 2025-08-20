@@ -225,7 +225,50 @@ class HUD {
     
     // Show pause screen
     showPause() {
-        this.showOverlay('Paused', 'Press ESC to resume', 'pause');
+        // Detect if mobile device
+        const isMobile = window.innerWidth <= 768;
+        
+        if (isMobile) {
+            this.showMobilePause();
+        } else {
+            this.showOverlay('Paused', 'Press ESC to resume', 'pause');
+        }
+    }
+    
+    // Show mobile-specific pause screen with Resume button
+    showMobilePause() {
+        this.hideOverlay();
+        
+        const overlay = document.createElement('div');
+        overlay.id = 'gameOverlay';
+        overlay.className = 'game-overlay pause';
+        
+        const overlayContent = document.createElement('div');
+        overlayContent.className = 'overlay-content';
+        
+        const titleElement = document.createElement('h2');
+        titleElement.textContent = 'Paused';
+        
+        const messageElement = document.createElement('p');
+        messageElement.textContent = 'Game is paused';
+        
+        // Add Resume button for mobile
+        const resumeButton = document.createElement('button');
+        resumeButton.className = 'mobile-start-button';
+        resumeButton.textContent = 'RESUME';
+        resumeButton.style.marginTop = '20px';
+        resumeButton.onclick = () => {
+            // Trigger resume by simulating escape key
+            const escEvent = new KeyboardEvent('keydown', { key: 'Escape', code: 'Escape' });
+            document.dispatchEvent(escEvent);
+        };
+        
+        overlayContent.appendChild(titleElement);
+        overlayContent.appendChild(messageElement);
+        overlayContent.appendChild(resumeButton);
+        overlay.appendChild(overlayContent);
+        
+        document.body.appendChild(overlay);
     }
     
     // Show overlay message
