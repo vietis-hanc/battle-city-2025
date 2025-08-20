@@ -16,6 +16,9 @@ class TerrainManager {
     
     // Initialize terrain grid
     initializeTerrain() {
+        // Reset eagle state for new game
+        this.eagleDestroyed = false;
+        
         // Initialize with empty terrain
         for (let y = 0; y < this.grid.height; y++) {
             this.terrain[y] = [];
