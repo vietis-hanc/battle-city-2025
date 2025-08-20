@@ -204,9 +204,9 @@ class Game {
         this.gameState.loseLife();
         
         if (this.gameState.playerLives > 0) {
-            // Respawn player
-            const playerStartX = 6 * CONSTANTS.TILE_SIZE;
-            const playerStartY = 12 * CONSTANTS.TILE_SIZE;
+            // Respawn player at safe position (same as initial spawn)
+            const playerStartX = 7 * CONSTANTS.TILE_SIZE;  // Center X position
+            const playerStartY = 10 * CONSTANTS.TILE_SIZE; // Above the eagle base walls
             this.playerTank.respawn(playerStartX, playerStartY);
         }
     }

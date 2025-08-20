@@ -34,6 +34,26 @@ class SpriteManager {
             ['player_right_t1', 'images/tank_player1_right_c0_t1.png'],
             ['player_right_t2', 'images/tank_player1_right_c0_t2.png'],
             
+            // Player tank upgraded sprites (power level 2 - s1)
+            ['player_up_t1_s1', 'images/tank_player1_up_c0_t1_s1.png'],
+            ['player_up_t2_s1', 'images/tank_player1_up_c0_t2_s1.png'],
+            ['player_down_t1_s1', 'images/tank_player1_down_c0_t1_s1.png'],
+            ['player_down_t2_s1', 'images/tank_player1_down_c0_t2_s1.png'],
+            ['player_left_t1_s1', 'images/tank_player1_left_c0_t1_s1.png'],
+            ['player_left_t2_s1', 'images/tank_player1_left_c0_t2_s1.png'],
+            ['player_right_t1_s1', 'images/tank_player1_right_c0_t1_s1.png'],
+            ['player_right_t2_s1', 'images/tank_player1_right_c0_t2_s1.png'],
+            
+            // Player tank upgraded sprites (power level 3 - s2)
+            ['player_up_t1_s2', 'images/tank_player1_up_c0_t1_s2.png'],
+            ['player_up_t2_s2', 'images/tank_player1_up_c0_t2_s2.png'],
+            ['player_down_t1_s2', 'images/tank_player1_down_c0_t1_s2.png'],
+            ['player_down_t2_s2', 'images/tank_player1_down_c0_t2_s2.png'],
+            ['player_left_t1_s2', 'images/tank_player1_left_c0_t1_s2.png'],
+            ['player_left_t2_s2', 'images/tank_player1_left_c0_t2_s2.png'],
+            ['player_right_t1_s2', 'images/tank_player1_right_c0_t1_s2.png'],
+            ['player_right_t2_s2', 'images/tank_player1_right_c0_t2_s2.png'],
+            
             // Enemy tank sprites
             ['basic_up_t1', 'images/tank_basic_up_c0_t1.png'],
             ['basic_up_t2', 'images/tank_basic_up_c0_t2.png'],
