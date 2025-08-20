@@ -52,7 +52,7 @@ class Explosion {
                 spriteName = `bullet_explosion_${this.frame + 1}`;
         }
         
-        this.spriteManager.drawSprite(ctx, spriteName, this.x, this.y);
+        this.spriteManager.drawSprite(ctx, spriteName, this.x, this.y, CONSTANTS.TILE_SIZE, CONSTANTS.TILE_SIZE);
     }
 }
 
