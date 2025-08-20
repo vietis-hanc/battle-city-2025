@@ -16,6 +16,7 @@ class Game {
         this.terrain = null;
         this.collision = null;
         this.bulletManager = null;
+        this.explosionManager = null;
         this.playerTank = null;
         this.enemyManager = null;
         this.powerUpManager = null;
@@ -37,7 +38,8 @@ class Game {
             // Initialize game systems
             this.terrain = new TerrainManager(this.grid, this.spriteManager);
             this.collision = new CollisionDetector(this.terrain, this.grid);
-            this.bulletManager = new BulletManager(this.grid, this.spriteManager, this.collision, this.terrain, this.audioManager);
+            this.explosionManager = new ExplosionManager(this.spriteManager);
+            this.bulletManager = new BulletManager(this.grid, this.spriteManager, this.collision, this.terrain, this.audioManager, this.explosionManager);
             
             // Initialize player tank at bottom center
             const playerStartX = 6 * CONSTANTS.TILE_SIZE;
@@ -127,6 +129,9 @@ class Game {
                 
                 // Update bullets and handle collisions
                 this.updateBullets(deltaTime);
+                
+                // Update explosions
+                this.explosionManager.update(deltaTime);
                 
                 // Update power-ups
                 this.powerUpManager.update(deltaTime, this.playerTank, this.gameState);
@@ -228,6 +233,7 @@ class Game {
         // Reset all game objects
         this.terrain = new TerrainManager(this.grid, this.spriteManager);
         this.collision = new CollisionDetector(this.terrain, this.grid);
+        this.explosionManager.clear();
         this.bulletManager.clear();
         
         // Reset player - spawn at bottom center in a safe position
@@ -259,6 +265,7 @@ class Game {
             this.playerTank.render(this.ctx);
             this.enemyManager.render(this.ctx);
             this.bulletManager.render(this.ctx);
+            this.explosionManager.render(this.ctx); // Render explosions on top of bullets
             this.terrain.renderForeground(this.ctx); // Render trees on top
         }
     }

@@ -49,13 +49,14 @@ class Bullet {
 }
 
 class BulletManager {
-    constructor(grid, spriteManager, collisionDetector, terrain, audioManager) {
+    constructor(grid, spriteManager, collisionDetector, terrain, audioManager, explosionManager) {
         this.bullets = [];
         this.grid = grid;
         this.spriteManager = spriteManager;
         this.collision = collisionDetector;
         this.terrain = terrain;
         this.audioManager = audioManager;
+        this.explosionManager = explosionManager;
     }
     
     // Create a new bullet
@@ -108,6 +109,11 @@ class BulletManager {
     handleTerrainHit(bullet, terrainHit) {
         bullet.active = false;
         
+        // Create explosion effect
+        if (this.explosionManager) {
+            this.explosionManager.createBulletExplosion(bullet.x - 8, bullet.y - 8);
+        }
+        
         // Play hit sound
         if (this.audioManager) {
             this.audioManager.play('bulletHit1');
@@ -127,6 +133,13 @@ class BulletManager {
                 if (this.audioManager) {
                     this.audioManager.play('explosion2');
                 }
+                
+                // Create big explosion for eagle
+                if (this.explosionManager) {
+                    const eaglePixelPos = this.grid.gridToPixel(terrainHit.gridX, terrainHit.gridY);
+                    this.explosionManager.createBigExplosion(eaglePixelPos.x, eaglePixelPos.y);
+                }
+                
                 return { eagleDestroyed: true };
             }
         }
@@ -137,6 +150,11 @@ class BulletManager {
     // Handle bullet hitting tank
     handleTankHit(bullet, tank) {
         bullet.active = false;
+        
+        // Create explosion effect on tank
+        if (this.explosionManager) {
+            this.explosionManager.createTankExplosion(tank.x, tank.y);
+        }
         
         // Play explosion sound
         if (this.audioManager) {

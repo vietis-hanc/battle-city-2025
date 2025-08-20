@@ -73,6 +73,14 @@ class SpriteManager {
             ['shovel', 'images/powerup_shovel.png'],
             
             // Effect sprites
+            ['bullet_explosion_1', 'images/bullet_explosion_1.png'],
+            ['bullet_explosion_2', 'images/bullet_explosion_2.png'],
+            ['bullet_explosion_3', 'images/bullet_explosion_3.png'],
+            ['big_explosion_1', 'images/big_explosion_1.png'],
+            ['big_explosion_2', 'images/big_explosion_2.png'],
+            ['big_explosion_3', 'images/big_explosion_3.png'],
+            ['big_explosion_4', 'images/big_explosion_4.png'],
+            ['big_explosion_5', 'images/big_explosion_5.png'],
             ['explosion1', 'images/big_explosion_1.png'],
             ['explosion2', 'images/big_explosion_2.png'],
             ['explosion3', 'images/big_explosion_3.png']

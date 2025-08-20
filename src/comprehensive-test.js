@@ -239,11 +239,10 @@ class ComprehensiveTestSuite {
     async testExplosionEffects() {
         this.log("💥 Testing Explosion Effects...");
         
-        // Test 1: Check if explosion effects are implemented
-        // This would typically check for explosion sprites or animations
+        // Test 1: Check if explosion sprites are loaded
         const hasExplosionSprites = this.game.spriteManager && 
-            (this.game.spriteManager.sprites['explosion1'] !== undefined ||
-             this.game.spriteManager.sprites['explode'] !== undefined);
+            (this.game.spriteManager.sprites.has('bullet_explosion_1') ||
+             this.game.spriteManager.sprites.has('big_explosion_1'));
         
         this.addResult("Explosion sprites exist", hasExplosionSprites,
             hasExplosionSprites ? "Explosion sprites found" : "Explosion sprites missing");
@@ -255,11 +254,16 @@ class ComprehensiveTestSuite {
         
         if (hasAudioManager) {
             const hasExplosionSound = this.game.audioManager.sounds && 
-                (this.game.audioManager.sounds['explosion'] !== undefined ||
-                 this.game.audioManager.sounds['explode'] !== undefined);
+                (this.game.audioManager.sounds['explosion1'] !== undefined ||
+                 this.game.audioManager.sounds['explosion2'] !== undefined);
             this.addResult("Explosion sound exists", hasExplosionSound,
                 hasExplosionSound ? "Explosion sound found" : "Explosion sound missing");
         }
+        
+        // Test 3: Explosion manager exists
+        const hasExplosionManager = this.game.explosionManager !== undefined;
+        this.addResult("Explosion manager exists", hasExplosionManager,
+            hasExplosionManager ? "ExplosionManager instance found" : "ExplosionManager missing");
     }
 
     printResults() {
