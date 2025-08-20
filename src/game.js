@@ -230,9 +230,9 @@ class Game {
         this.collision = new CollisionDetector(this.terrain, this.grid);
         this.bulletManager.clear();
         
-        // Reset player
-        const playerStartX = 6 * CONSTANTS.TILE_SIZE;
-        const playerStartY = 12 * CONSTANTS.TILE_SIZE;
+        // Reset player - spawn at bottom center in a safe position
+        const playerStartX = 7 * CONSTANTS.TILE_SIZE;  // Center X position
+        const playerStartY = 10 * CONSTANTS.TILE_SIZE; // Above the eagle base walls
         this.playerTank.respawn(playerStartX, playerStartY);
         
         // Reset enemies

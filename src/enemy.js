@@ -196,6 +196,13 @@ class EnemyManager {
         this.spawnTimer = 0;
         this.spawnInterval = 2000; // 2 seconds between spawns
         
+        // Define spawn positions
+        this.spawnPositions = [
+            { x: 0, y: 0 },
+            { x: 6 * CONSTANTS.TILE_SIZE, y: 0 },
+            { x: 12 * CONSTANTS.TILE_SIZE, y: 0 }
+        ];
+        
         this.grid = grid;
         this.spriteManager = spriteManager;
         this.bulletManager = bulletManager;
@@ -257,14 +264,9 @@ class EnemyManager {
         if (this.spawnQueue.length === 0) return;
         
         const enemyType = this.spawnQueue.shift();
-        const spawnPositions = [
-            { x: 0, y: 0 },
-            { x: 6 * CONSTANTS.TILE_SIZE, y: 0 },
-            { x: 12 * CONSTANTS.TILE_SIZE, y: 0 }
-        ];
         
         // Try each spawn position
-        for (const pos of spawnPositions) {
+        for (const pos of this.spawnPositions) {
             // Check if position is blocked by terrain
             if (this.collision.isPositionBlocked(pos.x, pos.y)) {
                 continue;
@@ -318,10 +320,5 @@ class EnemyManager {
     // Get remaining count for HUD (alias for compatibility)
     getRemainingCount() {
         return this.getTotalRemainingEnemies();
-    }
-    
-    // Get remaining enemies count
-    getRemainingCount() {
-        return this.spawnQueue.length + this.getActiveEnemies().length;
     }
 }
