@@ -66,6 +66,11 @@ class BulletManager {
         };
     }
     
+    // Update collision detector reference (needed when terrain is reset)
+    updateCollisionDetector(collisionDetector) {
+        this.collision = collisionDetector;
+    }
+    
     // Create a new bullet
     createBullet(x, y, direction, power, team) {
         const bullet = new Bullet(x, y, direction, power, team, this.grid, this.spriteManager);

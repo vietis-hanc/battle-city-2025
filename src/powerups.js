@@ -47,11 +47,16 @@ class PowerUp {
         this.spriteManager.drawSprite(ctx, this.type, this.x, this.y);
     }
     
-    // Check collision with tank
+    // Check collision with tank using bounding box with tolerance
     checkCollision(tank) {
         if (!this.active || !tank.active) return false;
         
-        return tank.x === this.x && tank.y === this.y;
+        // Use bounding box collision with tolerance instead of exact position matching
+        const tolerance = CONSTANTS.TILE_SIZE * 0.7; // Allow 70% overlap
+        const dx = Math.abs(tank.x - this.x);
+        const dy = Math.abs(tank.y - this.y);
+        
+        return dx < tolerance && dy < tolerance;
     }
     
     // Apply power-up effect

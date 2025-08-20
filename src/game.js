@@ -200,8 +200,9 @@ class Game {
         this.audioManager.play('stageStart');
         
         // Reset all game objects
-        this.terrain = new TerrainManager(this.grid, this.spriteManager);
+        this.terrain.initializeTerrain(); // Reset existing terrain instead of creating new instance
         this.collision = new CollisionDetector(this.terrain, this.grid);
+        this.bulletManager.updateCollisionDetector(this.collision); // Update bullet manager's collision detector
         this.explosionManager.clear();
         this.bulletManager.clear();
         
