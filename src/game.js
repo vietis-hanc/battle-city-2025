@@ -39,7 +39,14 @@ class Game {
             this.terrain = new TerrainManager(this.grid, this.spriteManager);
             this.collision = new CollisionDetector(this.terrain, this.grid);
             this.explosionManager = new ExplosionManager(this.spriteManager);
-            this.bulletManager = new BulletManager(this.grid, this.spriteManager, this.collision, this.terrain, this.audioManager, this.explosionManager);
+            
+            // Create bullet manager with callbacks
+            const bulletCallbacks = {
+                onEnemyDefeated: (enemyType) => this.gameState.enemyDefeated(enemyType),
+                onPlayerDestroyed: () => this.handlePlayerDestroyed(),
+                onEagleDestroyed: () => this.gameState.currentState = CONSTANTS.GAME_STATES.GAME_OVER
+            };
+            this.bulletManager = new BulletManager(this.grid, this.spriteManager, this.collision, this.terrain, this.audioManager, this.explosionManager, bulletCallbacks);
             
             // Initialize player tank at bottom center
             const playerStartX = 6 * CONSTANTS.TILE_SIZE;
@@ -152,46 +159,8 @@ class Game {
     updateBullets(deltaTime) {
         const allTanks = [this.playerTank].concat(this.enemyManager.getActiveEnemies());
         
-        // Update bullets
+        // Update bullets - BulletManager handles all collisions internally
         this.bulletManager.update(allTanks);
-        
-        // Handle bullet hits on tanks
-        for (const tank of allTanks) {
-            if (!tank.active) continue;
-            
-            const playerBullets = this.bulletManager.getBulletsByTeam('player');
-            const enemyBullets = this.bulletManager.getBulletsByTeam('enemy');
-            
-            if (tank.team === 'player') {
-                // Check enemy bullets hitting player
-                for (const bullet of enemyBullets) {
-                    if (this.collision.checkRectCollision(
-                        bullet.x, bullet.y, 8, 8,
-                        tank.x, tank.y, CONSTANTS.TILE_SIZE, CONSTANTS.TILE_SIZE
-                    )) {
-                        bullet.active = false;
-                        if (tank.takeDamage(bullet.power)) {
-                            this.handlePlayerDestroyed();
-                        }
-                        break;
-                    }
-                }
-            } else {
-                // Check player bullets hitting enemies
-                for (const bullet of playerBullets) {
-                    if (this.collision.checkRectCollision(
-                        bullet.x, bullet.y, 8, 8,
-                        tank.x, tank.y, CONSTANTS.TILE_SIZE, CONSTANTS.TILE_SIZE
-                    )) {
-                        bullet.active = false;
-                        if (tank.takeDamage(bullet.power)) {
-                            this.gameState.enemyDefeated(tank.type);
-                        }
-                        break;
-                    }
-                }
-            }
-        }
         
         // Check eagle destruction
         if (this.terrain.eagleDestroyed) {

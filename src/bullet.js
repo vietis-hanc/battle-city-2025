@@ -49,7 +49,7 @@ class Bullet {
 }
 
 class BulletManager {
-    constructor(grid, spriteManager, collisionDetector, terrain, audioManager, explosionManager) {
+    constructor(grid, spriteManager, collisionDetector, terrain, audioManager, explosionManager, callbacks = {}) {
         this.bullets = [];
         this.grid = grid;
         this.spriteManager = spriteManager;
@@ -57,6 +57,13 @@ class BulletManager {
         this.terrain = terrain;
         this.audioManager = audioManager;
         this.explosionManager = explosionManager;
+        
+        // Callbacks for game events
+        this.callbacks = {
+            onEnemyDefeated: callbacks.onEnemyDefeated || (() => {}),
+            onPlayerDestroyed: callbacks.onPlayerDestroyed || (() => {}),
+            onEagleDestroyed: callbacks.onEagleDestroyed || (() => {})
+        };
     }
     
     // Create a new bullet
@@ -131,7 +138,7 @@ class BulletManager {
             );
             
             // Handle eagle destruction
-            if (terrainHit.terrain === CONSTANTS.TERRAIN.EAGLE) {
+            if (terrainHit.terrain === CONSTANTS.TERRAIN.EAGLE && destroyed) {
                 // Game over - eagle destroyed
                 if (this.audioManager) {
                     this.audioManager.play('explosion2');
@@ -142,6 +149,9 @@ class BulletManager {
                     const eaglePixelPos = this.grid.gridToPixel(terrainHit.gridX, terrainHit.gridY);
                     this.explosionManager.createBigExplosion(eaglePixelPos.x, eaglePixelPos.y);
                 }
+                
+                // Call eagle destroyed callback
+                this.callbacks.onEagleDestroyed();
                 
                 return { eagleDestroyed: true };
             }
@@ -167,9 +177,18 @@ class BulletManager {
         }
         
         // Damage tank
-        tank.takeDamage(bullet.power);
+        const tankDestroyed = tank.takeDamage(bullet.power);
         
-        return { tankHit: tank };
+        // Call appropriate callback when tank is destroyed
+        if (tankDestroyed) {
+            if (tank.team === 'enemy') {
+                this.callbacks.onEnemyDefeated(tank.type);
+            } else if (tank.team === 'player') {
+                this.callbacks.onPlayerDestroyed();
+            }
+        }
+        
+        return { tankHit: tank, destroyed: tankDestroyed };
     }
     
     // Handle bullet vs bullet collision
