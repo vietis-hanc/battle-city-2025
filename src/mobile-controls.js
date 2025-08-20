@@ -23,9 +23,10 @@ class MobileControls {
         // Check screen size
         const isSmallScreen = window.innerWidth <= 768;
         
-        // For testing/development: also enable for small screens even without touch
-        const isTestingMobile = isSmallScreen && window.innerWidth < 600;
+        // For testing/development: also enable for small screens
+        const isTestingMobile = isSmallScreen && window.innerWidth <= 600;
         
+        // Enable mobile controls if any condition is met
         return isMobileUserAgent || (isTouchDevice && isSmallScreen) || isTestingMobile;
     }
     
@@ -45,7 +46,59 @@ class MobileControls {
         });
         
         // Listen for resize events
-        window.addEventListener('resize', () => this.updateLayout());
+        window.addEventListener('resize', () => {
+            this.updateMobileState();
+            this.updateLayout();
+        });
+        
+        // Prevent pinch zoom on mobile
+        this.preventPinchZoom();
+    }
+    
+    // Update mobile state on resize
+    updateMobileState() {
+        const wasMobile = this.isMobile;
+        this.isMobile = this.detectMobile();
+        
+        if (!wasMobile && this.isMobile) {
+            // Just became mobile - initialize controls
+            this.createMobileControlsHTML();
+            this.bindTouchEvents();
+            this.enable();
+        } else if (wasMobile && !this.isMobile) {
+            // No longer mobile - disable controls
+            this.disable();
+            if (this.controlsElement) {
+                this.controlsElement.remove();
+                this.controlsElement = null;
+            }
+        }
+    }
+    
+    // Prevent pinch zoom on mobile devices
+    preventPinchZoom() {
+        // Prevent touch events that could cause zoom
+        document.addEventListener('touchstart', (e) => {
+            if (e.touches.length > 1) {
+                e.preventDefault();
+            }
+        }, { passive: false });
+        
+        document.addEventListener('touchend', (e) => {
+            const now = (new Date()).getTime();
+            if (now - this.lastTouch <= 300) {
+                e.preventDefault();
+            }
+            this.lastTouch = now;
+        }, { passive: false });
+        
+        document.addEventListener('touchmove', (e) => {
+            if (e.scale !== 1) {
+                e.preventDefault();
+            }
+        }, { passive: false });
+        
+        this.lastTouch = 0;
     }
     
     // Create mobile controls HTML elements
@@ -145,22 +198,22 @@ class MobileControls {
         // Map actions to input manager methods
         switch (action) {
             case 'up':
-                this.inputManager.keys.ArrowUp = true;
+                this.inputManager.setTouchKey('ArrowUp', true);
                 break;
             case 'down':
-                this.inputManager.keys.ArrowDown = true;
+                this.inputManager.setTouchKey('ArrowDown', true);
                 break;
             case 'left':
-                this.inputManager.keys.ArrowLeft = true;
+                this.inputManager.setTouchKey('ArrowLeft', true);
                 break;
             case 'right':
-                this.inputManager.keys.ArrowRight = true;
+                this.inputManager.setTouchKey('ArrowRight', true);
                 break;
             case 'fire':
-                this.inputManager.keys[' '] = true; // Space key
+                this.inputManager.setTouchKey('Space', true);
                 break;
             case 'pause':
-                this.inputManager.keys.Escape = true;
+                this.inputManager.setTouchKey('Escape', true);
                 break;
         }
     }
@@ -172,22 +225,22 @@ class MobileControls {
         // Map actions to input manager methods
         switch (action) {
             case 'up':
-                this.inputManager.keys.ArrowUp = false;
+                this.inputManager.setTouchKey('ArrowUp', false);
                 break;
             case 'down':
-                this.inputManager.keys.ArrowDown = false;
+                this.inputManager.setTouchKey('ArrowDown', false);
                 break;
             case 'left':
-                this.inputManager.keys.ArrowLeft = false;
+                this.inputManager.setTouchKey('ArrowLeft', false);
                 break;
             case 'right':
-                this.inputManager.keys.ArrowRight = false;
+                this.inputManager.setTouchKey('ArrowRight', false);
                 break;
             case 'fire':
-                this.inputManager.keys[' '] = false;
+                this.inputManager.setTouchKey('Space', false);
                 break;
             case 'pause':
-                this.inputManager.keys.Escape = false;
+                this.inputManager.setTouchKey('Escape', false);
                 break;
         }
     }

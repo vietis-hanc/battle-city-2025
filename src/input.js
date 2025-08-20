@@ -4,6 +4,8 @@ class InputManager {
         this.keys = new Set();
         this.keyPressed = new Set();
         this.keyReleased = new Set();
+        // Mobile touch state tracking
+        this.touchKeys = new Set();
         this.setupEventListeners();
     }
     
@@ -26,12 +28,12 @@ class InputManager {
         });
     }
     
-    // Check if key is currently pressed
+    // Check if key is currently pressed (includes mobile touch)
     isKeyDown(keyCode) {
-        return this.keys.has(keyCode);
+        return this.keys.has(keyCode) || this.touchKeys.has(keyCode);
     }
     
-    // Check if key was just pressed this frame
+    // Check if key was just pressed this frame (includes mobile touch)
     isKeyPressed(keyCode) {
         return this.keyPressed.has(keyCode);
     }
@@ -39,6 +41,19 @@ class InputManager {
     // Check if key was just released this frame
     isKeyReleased(keyCode) {
         return this.keyReleased.has(keyCode);
+    }
+    
+    // Mobile control methods
+    setTouchKey(keyCode, pressed) {
+        if (pressed) {
+            if (!this.touchKeys.has(keyCode)) {
+                this.keyPressed.add(keyCode); // Trigger key press event
+            }
+            this.touchKeys.add(keyCode);
+        } else {
+            this.touchKeys.delete(keyCode);
+            this.keyReleased.add(keyCode); // Trigger key release event
+        }
     }
     
     // Get player movement direction from arrow keys

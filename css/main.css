@@ -36,8 +36,7 @@ body {
 
 #hud {
     display: flex;
-    justify-content: space-between;
-    align-items: center;
+    flex-direction: column;
     width: 480px;
     margin-top: 10px;
     padding: 10px;
@@ -45,10 +44,18 @@ body {
     border: 1px solid #333;
 }
 
+.hud-line-1, .hud-line-2 {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    margin: 2px 0;
+}
+
 #hud div {
     color: #fff;
     text-align: center;
-    min-width: 120px;
+    flex: 1;
 }
 
 #hud .warning {
@@ -131,4 +138,51 @@ body {
 
 .game-overlay.start-screen h2 {
     color: #2196F3;
+}
+
+/* Mobile responsive design */
+@media (max-width: 768px) {
+    body {
+        font-size: 10px;
+        overflow: auto;
+    }
+    
+    #gameContainer {
+        padding: 10px;
+        min-height: 100vh;
+    }
+    
+    #gameCanvas {
+        width: 100%;
+        max-width: 90vw;
+        height: auto;
+        aspect-ratio: 1;
+        border-width: 1px;
+    }
+    
+    #hud {
+        width: 100%;
+        max-width: 90vw;
+        margin-top: 5px;
+        padding: 8px;
+        font-size: 9px;
+    }
+    
+    .hud-line-1, .hud-line-2 {
+        margin: 1px 0;
+    }
+    
+    /* Hide desktop-only elements on mobile */
+    @media (max-width: 600px) {
+        .mobile-start-button {
+            display: block !important;
+        }
+    }
+}
+
+/* Desktop - hide mobile start buttons */
+@media (min-width: 769px) {
+    .mobile-start-button {
+        display: none;
+    }
 }

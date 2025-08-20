@@ -106,9 +106,19 @@ class HUD {
         restartElement.className = 'retro-restart-prompt';
         restartElement.textContent = 'PUSH START BUTTON';
         
+        // Mobile restart button
+        const mobileRestartBtn = document.createElement('button');
+        mobileRestartBtn.className = 'mobile-start-button';
+        mobileRestartBtn.textContent = 'RESTART';
+        mobileRestartBtn.onclick = () => {
+            // Trigger restart game
+            document.dispatchEvent(new KeyboardEvent('keydown', { code: 'Enter' }));
+        };
+        
         overlayContent.appendChild(gameOverImg);
         overlayContent.appendChild(scoreElement);
         overlayContent.appendChild(restartElement);
+        overlayContent.appendChild(mobileRestartBtn);
         
         overlay.appendChild(overlayContent);
         document.body.appendChild(overlay);
@@ -149,10 +159,20 @@ class HUD {
         restartElement.className = 'retro-restart-prompt';
         restartElement.textContent = 'PUSH START BUTTON';
         
+        // Mobile restart button  
+        const mobileRestartBtn = document.createElement('button');
+        mobileRestartBtn.className = 'mobile-start-button';
+        mobileRestartBtn.textContent = 'NEXT GAME';
+        mobileRestartBtn.onclick = () => {
+            // Trigger restart game
+            document.dispatchEvent(new KeyboardEvent('keydown', { code: 'Enter' }));
+        };
+        
         overlayContent.appendChild(flag);
         overlayContent.appendChild(victoryText);
         overlayContent.appendChild(scoreElement);
         overlayContent.appendChild(restartElement);
+        overlayContent.appendChild(mobileRestartBtn);
         
         overlay.appendChild(overlayContent);
         document.body.appendChild(overlay);
@@ -292,6 +312,15 @@ class HUD {
         startPrompt.className = 'retro-start-prompt';
         startPrompt.textContent = 'PUSH START BUTTON';
         
+        // Mobile start button
+        const mobileStartBtn = document.createElement('button');
+        mobileStartBtn.className = 'mobile-start-button';
+        mobileStartBtn.textContent = 'START';
+        mobileStartBtn.onclick = () => {
+            // Trigger start game
+            document.dispatchEvent(new KeyboardEvent('keydown', { code: 'Enter' }));
+        };
+        
         // Assembly
         overlayContent.appendChild(logo);
         overlayContent.appendChild(gameTitle);
@@ -299,6 +328,7 @@ class HUD {
         overlayContent.appendChild(playerText);
         overlayContent.appendChild(copyright);
         overlayContent.appendChild(startPrompt);
+        overlayContent.appendChild(mobileStartBtn);
         
         overlay.appendChild(overlayContent);
         document.body.appendChild(overlay);
