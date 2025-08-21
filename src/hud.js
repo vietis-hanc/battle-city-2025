@@ -145,11 +145,11 @@ class HUD {
         const overlayContent = document.createElement('div');
         overlayContent.className = 'retro-overlay-content';
         
-        // Victory flag
-        const flag = document.createElement('img');
-        flag.src = 'images/flag.png';
-        flag.className = 'retro-victory-flag';
-        flag.alt = 'Victory';
+        // Victory logo
+        const logo = document.createElement('img');
+        logo.src = 'images/battle_city.png';
+        logo.className = 'retro-victory-logo';
+        logo.alt = 'Battle City';
         
         // Victory text
         const victoryText = document.createElement('div');
@@ -187,7 +187,7 @@ class HUD {
             document.dispatchEvent(new KeyboardEvent('keydown', { code: 'Enter' }));
         };
         
-        overlayContent.appendChild(flag);
+        overlayContent.appendChild(logo);
         overlayContent.appendChild(victoryText);
         overlayContent.appendChild(scoreElement);
         overlayContent.appendChild(restartElement);
@@ -218,9 +218,9 @@ class HUD {
             overlayContent.appendChild(img);
         } else if (type === 'victory') {
             const img = document.createElement('img');
-            img.src = 'images/flag.png';
-            img.className = 'victory-flag';
-            img.alt = 'Victory';
+            img.src = 'images/battle_city.png';
+            img.className = 'victory-logo';
+            img.alt = 'Battle City';
             overlayContent.appendChild(img);
         }
         

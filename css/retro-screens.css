@@ -132,9 +132,9 @@
 }
 
 /* Victory Screen */
-.retro-victory-flag {
-    width: 64px;
-    height: 64px;
+.retro-victory-logo {
+    width: 240px;
+    height: auto;
     margin-bottom: 20px;
     image-rendering: pixelated;
     image-rendering: -moz-crisp-edges;

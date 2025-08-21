@@ -154,11 +154,11 @@ class Game {
                 
                 // Update power-ups
                 this.powerUpManager.update(deltaTime, this.playerTank, this.gameState);
-                
-                // Check game end conditions
-                this.checkGameEndConditions();
             }
         }
+        
+        // Check game end conditions (outside PLAYING state to handle state transitions)
+        this.checkGameEndConditions();
         
         // Update HUD
         this.hud.update(this.playerTank, this.enemyManager);
