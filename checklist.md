@@ -1,5 +1,5 @@
 # Current Goal:
-✅ COMPLETED: Enhanced UI with splash loading, updated start screen, and improved mobile controls layout
+✅ COMPLETED: Fixed Game Over Screen continuous rendering and RESTART button functionality
 
 # Check lists
 1. Chế độ chơi
@@ -124,3 +124,9 @@
 ✅ Improved mobile controls layout (D-pad left, fire button right)
 ✅ Enhanced loading progress display with animations
 ✅ Responsive design for different screen sizes
+
+🐛 BUG FIXES COMPLETED:
+✅ Fixed Game Over Screen continuous rendering issue
+✅ Fixed RESTART button functionality
+✅ Both Game Over and Victory screens now show only once
+✅ RESTART button properly clears overlays and resets game state
