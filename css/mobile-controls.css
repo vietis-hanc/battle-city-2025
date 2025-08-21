@@ -18,10 +18,10 @@
 /* Fire button (left side) */
 .mobile-fire-button {
     position: absolute;
-    left: 20px;
+    left: 60px;  /* Moved to the right */
     bottom: 20px;
-    width: 80px;
-    height: 80px;
+    width: 120px;  /* Increased by 50% from 80px */
+    height: 120px; /* Increased by 50% from 80px */
     background-image: url('../images/Nintendo-Button-A.png');
     background-size: contain;
     background-repeat: no-repeat;
@@ -45,20 +45,20 @@
     position: absolute;
     right: 20px;
     bottom: 20px;
-    width: 120px;
-    height: 120px;
+    width: 240px;  /* Doubled from 120px to accommodate larger buttons */
+    height: 240px; /* Doubled from 120px to accommodate larger buttons */
     pointer-events: auto;
 }
 
 /* Individual direction buttons */
 .mobile-direction-btn {
     position: absolute;
-    width: 40px;
-    height: 40px;
+    width: 80px;  /* Doubled from 40px */
+    height: 80px; /* Doubled from 40px */
     background-color: rgba(255, 255, 255, 0.1);
     border: 2px solid rgba(255, 255, 255, 0.3);
     border-radius: 8px;
-    background-size: 24px 24px;
+    background-size: 48px 48px;  /* Doubled from 24px */
     background-position: center;
     background-repeat: no-repeat;
     touch-action: manipulation;
@@ -76,24 +76,24 @@
 /* Direction button positions */
 .mobile-direction-btn.up {
     top: 0;
-    left: 40px;
+    left: 80px;  /* Adjusted for larger D-pad container */
     background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="white"><path d="M12 8l-6 6 1.41 1.41L12 10.83l4.59 4.58L18 14z"/></svg>');
 }
 
 .mobile-direction-btn.down {
     bottom: 0;
-    left: 40px;
+    left: 80px;  /* Adjusted for larger D-pad container */
     background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="white"><path d="M12 16l-6-6 1.41-1.41L12 13.17l4.59-4.58L18 10z"/></svg>');
 }
 
 .mobile-direction-btn.left {
-    top: 40px;
+    top: 80px;   /* Adjusted for larger D-pad container */
     left: 0;
     background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="white"><path d="M8 12l6-6 1.41 1.41L10.83 12l4.58 4.59L14 18z"/></svg>');
 }
 
 .mobile-direction-btn.right {
-    top: 40px;
+    top: 80px;   /* Adjusted for larger D-pad container */
     right: 0;
     background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="white"><path d="M16 12l-6-6-1.41 1.41L13.17 12l-4.58 4.59L10 18z"/></svg>');
 }
@@ -101,10 +101,10 @@
 /* Center area of D-pad */
 .mobile-dpad-center {
     position: absolute;
-    top: 40px;
-    left: 40px;
-    width: 40px;
-    height: 40px;
+    top: 80px;   /* Adjusted for larger D-pad container */
+    left: 80px;  /* Adjusted for larger D-pad container */
+    width: 80px; /* Doubled from 40px */
+    height: 80px;/* Doubled from 40px */
     background-color: rgba(0, 0, 0, 0.2);
     border-radius: 50%;
     pointer-events: none;
@@ -157,40 +157,40 @@
 /* Responsive adjustments */
 @media (max-width: 480px) {
     .mobile-fire-button {
-        width: 70px;
-        height: 70px;
-        left: 15px;
+        width: 100px;  /* Reduced but still larger than original */
+        height: 100px; /* Reduced but still larger than original */
+        left: 50px;    /* Adjusted position */
         bottom: 15px;
     }
     
     .mobile-dpad {
-        width: 100px;
-        height: 100px;
+        width: 200px;  /* Reduced but still double the original */
+        height: 200px; /* Reduced but still double the original */
         right: 15px;
         bottom: 15px;
     }
     
     .mobile-direction-btn {
-        width: 32px;
-        height: 32px;
-        background-size: 20px 20px;
+        width: 64px;   /* Reduced but still larger than original */
+        height: 64px;  /* Reduced but still larger than original */
+        background-size: 40px 40px;  /* Adjusted icon size */
     }
     
     .mobile-direction-btn.up,
     .mobile-direction-btn.down {
-        left: 34px;
+        left: 68px;    /* Adjusted for new container size */
     }
     
     .mobile-direction-btn.left,
     .mobile-direction-btn.right {
-        top: 34px;
+        top: 68px;     /* Adjusted for new container size */
     }
     
     .mobile-dpad-center {
-        top: 34px;
-        left: 34px;
-        width: 32px;
-        height: 32px;
+        top: 68px;     /* Adjusted for new container size */
+        left: 68px;    /* Adjusted for new container size */
+        width: 64px;   /* Adjusted for new button size */
+        height: 64px;  /* Adjusted for new button size */
     }
 }
 

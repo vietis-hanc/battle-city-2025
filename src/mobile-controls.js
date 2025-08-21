@@ -23,11 +23,11 @@ class MobileControls {
         // Check screen size
         const isSmallScreen = window.innerWidth <= 768;
         
-        // For testing/development: also enable for small screens
-        const isTestingMobile = isSmallScreen && window.innerWidth <= 600;
+        // For desktop browsers in responsive mode - prioritize screen size
+        const isTestingMobile = isSmallScreen;
         
-        // Enable mobile controls if any condition is met
-        return isMobileUserAgent || (isTouchDevice && isSmallScreen) || isTestingMobile;
+        // Enable mobile controls if any condition is met, prioritizing screen size for development
+        return isMobileUserAgent || isTouchDevice || isTestingMobile;
     }
     
     // Initialize mobile controls
