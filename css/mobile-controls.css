@@ -15,10 +15,10 @@
     display: block;
 }
 
-/* Fire button (left side) */
+/* Fire button (right side) */
 .mobile-fire-button {
     position: absolute;
-    left: 60px;  /* Moved to the right */
+    right: 60px;  /* Moved to the right */
     bottom: 20px;
     width: 120px;  /* Increased by 50% from 80px */
     height: 120px; /* Increased by 50% from 80px */
@@ -40,10 +40,10 @@
     transform: scale(0.95);
 }
 
-/* D-pad container (right side) */
+/* D-pad container (left side) */
 .mobile-dpad {
     position: absolute;
-    right: 20px;
+    left: 20px;
     bottom: 20px;
     width: 240px;  /* Doubled from 120px to accommodate larger buttons */
     height: 240px; /* Doubled from 120px to accommodate larger buttons */
@@ -159,14 +159,14 @@
     .mobile-fire-button {
         width: 100px;  /* Reduced but still larger than original */
         height: 100px; /* Reduced but still larger than original */
-        left: 50px;    /* Adjusted position */
+        right: 50px;    /* Adjusted position */
         bottom: 15px;
     }
     
     .mobile-dpad {
         width: 200px;  /* Reduced but still double the original */
         height: 200px; /* Reduced but still double the original */
-        right: 15px;
+        left: 15px;
         bottom: 15px;
     }
     
