@@ -60,8 +60,8 @@ class Game {
             };
             this.bulletManager = new BulletManager(this.grid, this.spriteManager, this.collision, this.terrain, this.audioManager, this.explosionManager, bulletCallbacks);
             
-            // Initialize player tank at specified position (5,14)
-            const playerStartX = 5 * CONSTANTS.TILE_SIZE;
+            // Initialize player tank at specified position (4,14)
+            const playerStartX = 4 * CONSTANTS.TILE_SIZE;
             const playerStartY = 14 * CONSTANTS.TILE_SIZE;
             this.playerTank = new PlayerTank(
                 playerStartX, playerStartY,
@@ -185,7 +185,7 @@ class Game {
         this.gameState.loseLife();
         
         if (this.gameState.playerLives > 0) {
-            // Respawn player at specified position (5,14)  
+            // Respawn player at specified position (4,14)  
             const playerStartX = 4 * CONSTANTS.TILE_SIZE;
             const playerStartY = 14 * CONSTANTS.TILE_SIZE;
             this.playerTank.respawn(playerStartX, playerStartY);
@@ -218,7 +218,7 @@ class Game {
         this.explosionManager.clear();
         this.bulletManager.clear();
         
-        // Reset player - spawn at specified position (5,14)
+        // Reset player - spawn at specified position (4,14)
         const playerStartX = 4 * CONSTANTS.TILE_SIZE;
         const playerStartY = 14 * CONSTANTS.TILE_SIZE;
         this.playerTank.respawn(playerStartX, playerStartY);

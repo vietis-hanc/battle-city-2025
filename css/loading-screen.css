@@ -11,7 +11,7 @@
 body.loaded #gameContainer,
 body.loaded #gameCanvas,
 body.loaded #hud {
-    display: block;
+    display: flex;
 }
 
 .loading-overlay {
