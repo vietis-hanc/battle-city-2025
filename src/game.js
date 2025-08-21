@@ -13,6 +13,7 @@ class Game {
         this.input = new InputManager();
         this.gameState = new GameState();
         this.hud = new HUD(this.gameState);
+        this.hud.setGame(this); // Set game reference for restart functionality
         this.audioManager = new AudioManager();
         
         // Initialize mobile controls
@@ -31,6 +32,10 @@ class Game {
         this.lastFrameTime = 0;
         this.running = false;
         this.initialized = false;
+        
+        // Audio state tracking to prevent repeated playback
+        this.gameOverSoundPlayed = false;
+        this.victorySoundPlayed = false;
         
         this.init();
     }
@@ -195,10 +200,16 @@ class Game {
     // Check game end conditions
     checkGameEndConditions() {
         if (this.gameState.currentState === CONSTANTS.GAME_STATES.GAME_OVER) {
-            this.audioManager.play('gameOver');
+            if (!this.gameOverSoundPlayed) {
+                this.audioManager.play('gameOver');
+                this.gameOverSoundPlayed = true;
+            }
             this.hud.showGameOver();
         } else if (this.gameState.currentState === CONSTANTS.GAME_STATES.VICTORY) {
-            this.audioManager.play('statistics');
+            if (!this.victorySoundPlayed) {
+                this.audioManager.play('statistics');
+                this.victorySoundPlayed = true;
+            }
             this.hud.showVictory();
         }
     }
@@ -207,6 +218,10 @@ class Game {
     startNewGame() {
         this.gameState.startNewGame();
         this.hud.reset();
+        
+        // Reset audio state flags
+        this.gameOverSoundPlayed = false;
+        this.victorySoundPlayed = false;
         
         // Play start sound
         this.audioManager.play('stageStart');

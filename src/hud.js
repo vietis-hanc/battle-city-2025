@@ -2,7 +2,13 @@
 class HUD {
     constructor(gameState) {
         this.gameState = gameState;
+        this.game = null; // Will be set by the game instance
         this.setupElements();
+    }
+    
+    // Set game reference for restart functionality
+    setGame(game) {
+        this.game = game;
     }
     
     // Setup DOM elements
@@ -111,8 +117,10 @@ class HUD {
         desktopRestartBtn.className = 'desktop-start-button';
         desktopRestartBtn.textContent = 'RESTART';
         desktopRestartBtn.onclick = () => {
-            // Trigger restart game
-            document.dispatchEvent(new KeyboardEvent('keydown', { code: 'Enter' }));
+            // Direct restart game call
+            if (this.game) {
+                this.game.startNewGame();
+            }
         };
 
         // Mobile restart button
@@ -120,8 +128,10 @@ class HUD {
         mobileRestartBtn.className = 'mobile-start-button';
         mobileRestartBtn.textContent = 'RESTART';
         mobileRestartBtn.onclick = () => {
-            // Trigger restart game
-            document.dispatchEvent(new KeyboardEvent('keydown', { code: 'Enter' }));
+            // Direct restart game call
+            if (this.game) {
+                this.game.startNewGame();
+            }
         };
         
         overlayContent.appendChild(gameOverImg);
@@ -174,8 +184,10 @@ class HUD {
         desktopRestartBtn.className = 'desktop-start-button';
         desktopRestartBtn.textContent = 'NEXT GAME';
         desktopRestartBtn.onclick = () => {
-            // Trigger restart game
-            document.dispatchEvent(new KeyboardEvent('keydown', { code: 'Enter' }));
+            // Direct restart game call
+            if (this.game) {
+                this.game.startNewGame();
+            }
         };
 
         // Mobile restart button  
@@ -183,8 +195,10 @@ class HUD {
         mobileRestartBtn.className = 'mobile-start-button';
         mobileRestartBtn.textContent = 'NEXT GAME';
         mobileRestartBtn.onclick = () => {
-            // Trigger restart game
-            document.dispatchEvent(new KeyboardEvent('keydown', { code: 'Enter' }));
+            // Direct restart game call
+            if (this.game) {
+                this.game.startNewGame();
+            }
         };
         
         overlayContent.appendChild(logo);
@@ -428,8 +442,10 @@ class HUD {
         desktopStartBtn.className = 'desktop-start-button';
         desktopStartBtn.textContent = 'START';
         desktopStartBtn.onclick = () => {
-            // Trigger start game
-            document.dispatchEvent(new KeyboardEvent('keydown', { code: 'Enter' }));
+            // Direct start game call
+            if (this.game) {
+                this.game.startNewGame();
+            }
         };
 
         // Mobile start button
@@ -437,8 +453,10 @@ class HUD {
         mobileStartBtn.className = 'mobile-start-button';
         mobileStartBtn.textContent = 'START';
         mobileStartBtn.onclick = () => {
-            // Trigger start game
-            document.dispatchEvent(new KeyboardEvent('keydown', { code: 'Enter' }));
+            // Direct start game call
+            if (this.game) {
+                this.game.startNewGame();
+            }
         };
         
         overlayContent.appendChild(gameTitle);
