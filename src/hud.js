@@ -326,6 +326,11 @@ class HUD {
         gameTitle.className = 'retro-game-title';
         gameTitle.textContent = 'TANK BATTLE 1990';
         
+        // Challenge subtitle
+        const challengeSubtitle = document.createElement('div');
+        challengeSubtitle.className = 'retro-challenge-subtitle';
+        challengeSubtitle.textContent = 'VietIS AI Challenge 2025';
+        
         const romanOne = document.createElement('div');
         romanOne.className = 'retro-level-indicator';
         const romanImg = document.createElement('img');
@@ -367,6 +372,7 @@ class HUD {
         // Assembly
         overlayContent.appendChild(logo);
         overlayContent.appendChild(gameTitle);
+        overlayContent.appendChild(challengeSubtitle);
         overlayContent.appendChild(romanOne);
         overlayContent.appendChild(playerText);
         overlayContent.appendChild(copyright);

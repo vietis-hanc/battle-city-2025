@@ -1,0 +1,108 @@
+/* Loading screen styles */
+.loading-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(45deg, #000000, #1a1a1a);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    animation: loadingBackground 2s ease-in-out infinite alternate;
+}
+
+@keyframes loadingBackground {
+    0% { background: linear-gradient(45deg, #000000, #1a1a1a); }
+    100% { background: linear-gradient(45deg, #1a1a1a, #000000); }
+}
+
+.loading-content {
+    text-align: center;
+    color: #fff;
+    font-family: 'Courier New', monospace;
+}
+
+.loading-title {
+    font-size: 2.5rem;
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+    color: #ffff00;
+    text-shadow: 2px 2px 4px rgba(255, 255, 0, 0.5);
+    animation: titlePulse 1.5s ease-in-out infinite;
+}
+
+@keyframes titlePulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+}
+
+.loading-subtitle {
+    font-size: 1.2rem;
+    margin-bottom: 2rem;
+    color: #00ffff;
+    text-shadow: 1px 1px 2px rgba(0, 255, 255, 0.5);
+}
+
+.loading-text {
+    font-size: 1rem;
+    margin-bottom: 1.5rem;
+    color: #ffffff;
+    animation: loadingDots 1.5s infinite;
+}
+
+@keyframes loadingDots {
+    0% { opacity: 0.5; }
+    50% { opacity: 1; }
+    100% { opacity: 0.5; }
+}
+
+.progress-container {
+    width: 300px;
+    margin: 0 auto;
+}
+
+.progress-bar {
+    width: 100%;
+    height: 20px;
+    background-color: #333;
+    border: 2px solid #666;
+    border-radius: 10px;
+    overflow: hidden;
+    margin-bottom: 10px;
+}
+
+.progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #00ff00, #ffff00, #00ff00);
+    width: 0%;
+    transition: width 0.3s ease;
+    animation: progressShine 2s linear infinite;
+}
+
+@keyframes progressShine {
+    0% { background-position: -100% 0; }
+    100% { background-position: 100% 0; }
+}
+
+.progress-text {
+    font-size: 1.1rem;
+    color: #ffffff;
+    font-weight: bold;
+}
+
+/* Mobile responsive */
+@media (max-width: 480px) {
+    .loading-title {
+        font-size: 1.8rem;
+    }
+    
+    .loading-subtitle {
+        font-size: 1rem;
+    }
+    
+    .progress-container {
+        width: 250px;
+    }
+}

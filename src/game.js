@@ -4,9 +4,12 @@ class Game {
         this.canvas = document.getElementById('gameCanvas');
         this.ctx = this.canvas.getContext('2d');
         
+        // Initialize loading screen first
+        this.loadingScreen = new LoadingScreen();
+        
         // Core systems
         this.grid = new Grid();
-        this.spriteManager = new SpriteManager();
+        this.spriteManager = new SpriteManager(this.loadingScreen);
         this.input = new InputManager();
         this.gameState = new GameState();
         this.hud = new HUD(this.gameState);
@@ -35,8 +38,14 @@ class Game {
     // Initialize game
     async init() {
         try {
+            // Show loading screen first
+            this.loadingScreen.show(85); // Approximate number of sprites based on sprites.js
+            
             // Load sprites
             await this.spriteManager.loadAllSprites();
+            
+            // Hide loading screen before showing start screen
+            this.loadingScreen.hide();
             
             // Initialize game systems
             this.terrain = new TerrainManager(this.grid, this.spriteManager);

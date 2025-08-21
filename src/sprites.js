@@ -1,10 +1,11 @@
 // Sprite management for tank battle game
 class SpriteManager {
-    constructor() {
+    constructor(loadingScreen = null) {
         this.sprites = new Map();
         this.loaded = false;
         this.loadQueue = [];
         this.loadedCount = 0;
+        this.loadingScreen = loadingScreen;
     }
     
     // Load a sprite image
@@ -14,6 +15,12 @@ class SpriteManager {
             img.onload = () => {
                 this.sprites.set(name, img);
                 this.loadedCount++;
+                
+                // Update loading screen if available
+                if (this.loadingScreen) {
+                    this.loadingScreen.updateProgress(this.loadedCount);
+                }
+                
                 resolve(img);
             };
             img.onerror = reject;

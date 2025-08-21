@@ -51,6 +51,14 @@
     letter-spacing: 2px;
 }
 
+.retro-challenge-subtitle {
+    color: #00ffff;
+    font-size: 14px;
+    margin-bottom: 25px;
+    letter-spacing: 1px;
+    text-shadow: 0 0 8px rgba(0, 255, 255, 0.6);
+}
+
 .retro-level-indicator {
     margin: 20px 0;
 }
@@ -180,6 +188,10 @@
     
     .retro-game-title {
         font-size: 16px;
+    }
+    
+    .retro-challenge-subtitle {
+        font-size: 12px;
     }
     
     .retro-player-text {

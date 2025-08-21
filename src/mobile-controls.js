@@ -108,13 +108,13 @@ class MobileControls {
         controlsContainer.id = 'mobileControls';
         controlsContainer.className = 'mobile-controls';
         
-        // Create fire button (left side)
+        // Create fire button (right side)
         const fireButton = document.createElement('button');
         fireButton.id = 'mobileFireBtn';
         fireButton.className = 'mobile-fire-button';
         fireButton.setAttribute('data-action', 'fire');
         
-        // Create D-pad container (right side)
+        // Create D-pad container (left side)
         const dpadContainer = document.createElement('div');
         dpadContainer.className = 'mobile-dpad';
         
