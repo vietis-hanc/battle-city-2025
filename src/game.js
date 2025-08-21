@@ -202,15 +202,15 @@ class Game {
         if (this.gameState.currentState === CONSTANTS.GAME_STATES.GAME_OVER) {
             if (!this.gameOverSoundPlayed) {
                 this.audioManager.play('gameOver');
+                this.hud.showGameOver();
                 this.gameOverSoundPlayed = true;
             }
-            this.hud.showGameOver();
         } else if (this.gameState.currentState === CONSTANTS.GAME_STATES.VICTORY) {
             if (!this.victorySoundPlayed) {
                 this.audioManager.play('statistics');
+                this.hud.showVictory();
                 this.victorySoundPlayed = true;
             }
-            this.hud.showVictory();
         }
     }
     
@@ -218,6 +218,7 @@ class Game {
     startNewGame() {
         this.gameState.startNewGame();
         this.hud.reset();
+        this.hud.hideOverlay(); // Hide any existing overlays (game over, victory, pause)
         
         // Reset audio state flags
         this.gameOverSoundPlayed = false;
