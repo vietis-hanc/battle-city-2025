@@ -94,6 +94,9 @@ class LoadingScreen {
                     this.overlay = null;
                     this.progressBar = null;
                     this.progressText = null;
+                    
+                    // Show game content by adding loaded class to body
+                    document.body.classList.add('loaded');
                 }
             }, 1000); // Show loading screen for at least 1 second
         }

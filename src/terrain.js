@@ -118,23 +118,27 @@ class TerrainManager {
     // Add eagle base with protective walls
     addEagleBase() {
         const eagleX = 7;
-        const eagleY = 13;
+        const eagleY = 12; // Moved up by 1 row from 13
         
         // Place eagle
         this.terrain[eagleY][eagleX] = CONSTANTS.TERRAIN.EAGLE;
         
-        // Add protective brick walls around eagle (2 layers)
+        // Add protective brick walls around eagle (2 layers + additional layer below)
         const wallPositions = [
-            // Inner layer
-            [6, 12], [7, 12], [8, 12],
-            [6, 13], [8, 13],
+            // Inner layer (around eagle)
+            [6, 11], [7, 11], [8, 11], // Moved up by 1 row from 12
+            [6, 12], [8, 12], // Moved up by 1 row from 13
+            [6, 13], [7, 13], [8, 13], // Moved up by 1 row from 14
+            
+            // Additional layer below eagle (new requirement)
             [6, 14], [7, 14], [8, 14],
             
             // Outer layer
-            [5, 11], [6, 11], [7, 11], [8, 11], [9, 11],
-            [5, 12], [9, 12],
-            [5, 13], [9, 13],
-            [5, 14], [9, 14]
+            [5, 10], [6, 10], [7, 10], [8, 10], [9, 10], // Moved up by 1 row from 11
+            [5, 11], [9, 11], // Moved up by 1 row from 12
+            [5, 12], [9, 12], // Moved up by 1 row from 13
+            [5, 13], [9, 13], // Moved up by 1 row from 14
+            [5, 14], [9, 14] // New row for outer layer
         ];
         
         wallPositions.forEach(([x, y]) => {
@@ -249,13 +253,13 @@ class TerrainManager {
         // Store original wall positions and convert to steel
         this.originalEagleWalls = [];
         const eagleX = 7;
-        const eagleY = 13;
+        const eagleY = 12; // Updated position
         
-        // Wall positions around eagle
+        // Wall positions around eagle (inner layer)
         const wallPositions = [
-            [6, 12], [7, 12], [8, 12],
-            [6, 13], [8, 13],
-            [6, 14], [7, 14], [8, 14]
+            [6, 11], [7, 11], [8, 11],
+            [6, 12], [8, 12],
+            [6, 13], [7, 13], [8, 13]
         ];
         
         wallPositions.forEach(([x, y]) => {
@@ -278,11 +282,11 @@ class TerrainManager {
     
     // Restore original eagle walls
     restoreEagleWalls() {
-        // Restore walls to fresh brick state (2 layers)
+        // Restore walls to fresh brick state (inner layer)
         const wallPositions = [
-            [6, 12], [7, 12], [8, 12],
-            [6, 13], [8, 13],
-            [6, 14], [7, 14], [8, 14]
+            [6, 11], [7, 11], [8, 11],
+            [6, 12], [8, 12],
+            [6, 13], [7, 13], [8, 13]
         ];
         
         wallPositions.forEach(([x, y]) => {

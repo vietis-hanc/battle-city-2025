@@ -106,6 +106,15 @@ class HUD {
         restartElement.className = 'retro-restart-prompt';
         restartElement.textContent = 'PUSH START BUTTON';
         
+        // Desktop restart button
+        const desktopRestartBtn = document.createElement('button');
+        desktopRestartBtn.className = 'desktop-start-button';
+        desktopRestartBtn.textContent = 'RESTART';
+        desktopRestartBtn.onclick = () => {
+            // Trigger restart game
+            document.dispatchEvent(new KeyboardEvent('keydown', { code: 'Enter' }));
+        };
+
         // Mobile restart button
         const mobileRestartBtn = document.createElement('button');
         mobileRestartBtn.className = 'mobile-start-button';
@@ -118,6 +127,7 @@ class HUD {
         overlayContent.appendChild(gameOverImg);
         overlayContent.appendChild(scoreElement);
         overlayContent.appendChild(restartElement);
+        overlayContent.appendChild(desktopRestartBtn);
         overlayContent.appendChild(mobileRestartBtn);
         
         overlay.appendChild(overlayContent);
@@ -159,6 +169,15 @@ class HUD {
         restartElement.className = 'retro-restart-prompt';
         restartElement.textContent = 'PUSH START BUTTON';
         
+        // Desktop restart button
+        const desktopRestartBtn = document.createElement('button');
+        desktopRestartBtn.className = 'desktop-start-button';
+        desktopRestartBtn.textContent = 'NEXT GAME';
+        desktopRestartBtn.onclick = () => {
+            // Trigger restart game
+            document.dispatchEvent(new KeyboardEvent('keydown', { code: 'Enter' }));
+        };
+
         // Mobile restart button  
         const mobileRestartBtn = document.createElement('button');
         mobileRestartBtn.className = 'mobile-start-button';
@@ -172,6 +191,7 @@ class HUD {
         overlayContent.appendChild(victoryText);
         overlayContent.appendChild(scoreElement);
         overlayContent.appendChild(restartElement);
+        overlayContent.appendChild(desktopRestartBtn);
         overlayContent.appendChild(mobileRestartBtn);
         
         overlay.appendChild(overlayContent);
@@ -231,8 +251,51 @@ class HUD {
         if (isMobile) {
             this.showMobilePause();
         } else {
-            this.showOverlay('Paused', 'Press ESC to resume', 'pause');
+            this.showDesktopPause();
         }
+    }
+    
+    // Show desktop-specific pause screen with Resume button
+    showDesktopPause() {
+        this.hideOverlay();
+        
+        const overlay = document.createElement('div');
+        overlay.id = 'gameOverlay';
+        overlay.className = 'game-overlay pause retro-start-screen';
+        
+        const overlayContent = document.createElement('div');
+        overlayContent.className = 'retro-overlay-content';
+        
+        const titleElement = document.createElement('div');
+        titleElement.className = 'retro-game-title';
+        titleElement.textContent = 'PAUSED';
+        
+        const messageElement = document.createElement('div');
+        messageElement.className = 'retro-player-text';
+        messageElement.textContent = 'Game is paused';
+        
+        // Add Resume button for desktop
+        const resumeButton = document.createElement('button');
+        resumeButton.className = 'desktop-start-button';
+        resumeButton.textContent = 'RESUME';
+        resumeButton.style.marginTop = '20px';
+        resumeButton.onclick = () => {
+            // Trigger resume by simulating escape key
+            const escEvent = new KeyboardEvent('keydown', { key: 'Escape', code: 'Escape' });
+            document.dispatchEvent(escEvent);
+        };
+        
+        const instructionElement = document.createElement('div');
+        instructionElement.className = 'retro-start-prompt';
+        instructionElement.textContent = 'Press ESC to resume';
+        
+        overlayContent.appendChild(titleElement);
+        overlayContent.appendChild(messageElement);
+        overlayContent.appendChild(resumeButton);
+        overlayContent.appendChild(instructionElement);
+        overlay.appendChild(overlayContent);
+        
+        document.body.appendChild(overlay);
     }
     
     // Show mobile-specific pause screen with Resume button
@@ -360,6 +423,15 @@ class HUD {
         startPrompt.className = 'retro-start-prompt';
         startPrompt.textContent = 'PUSH START BUTTON';
         
+        // Desktop start button
+        const desktopStartBtn = document.createElement('button');
+        desktopStartBtn.className = 'desktop-start-button';
+        desktopStartBtn.textContent = 'START';
+        desktopStartBtn.onclick = () => {
+            // Trigger start game
+            document.dispatchEvent(new KeyboardEvent('keydown', { code: 'Enter' }));
+        };
+
         // Mobile start button
         const mobileStartBtn = document.createElement('button');
         mobileStartBtn.className = 'mobile-start-button';
@@ -369,14 +441,13 @@ class HUD {
             document.dispatchEvent(new KeyboardEvent('keydown', { code: 'Enter' }));
         };
         
-        // Assembly
-        overlayContent.appendChild(logo);
         overlayContent.appendChild(gameTitle);
         overlayContent.appendChild(challengeSubtitle);
         overlayContent.appendChild(romanOne);
         overlayContent.appendChild(playerText);
         overlayContent.appendChild(copyright);
         overlayContent.appendChild(startPrompt);
+        overlayContent.appendChild(desktopStartBtn);
         overlayContent.appendChild(mobileStartBtn);
         
         overlay.appendChild(overlayContent);
