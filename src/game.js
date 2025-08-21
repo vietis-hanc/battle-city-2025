@@ -4,12 +4,16 @@ class Game {
         this.canvas = document.getElementById('gameCanvas');
         this.ctx = this.canvas.getContext('2d');
         
+        // Initialize loading screen first
+        this.loadingScreen = new LoadingScreen();
+        
         // Core systems
         this.grid = new Grid();
-        this.spriteManager = new SpriteManager();
+        this.spriteManager = new SpriteManager(this.loadingScreen);
         this.input = new InputManager();
         this.gameState = new GameState();
         this.hud = new HUD(this.gameState);
+        this.hud.setGame(this); // Set game reference for restart functionality
         this.audioManager = new AudioManager();
         
         // Initialize mobile controls
@@ -29,14 +33,24 @@ class Game {
         this.running = false;
         this.initialized = false;
         
+        // Audio state tracking to prevent repeated playback
+        this.gameOverSoundPlayed = false;
+        this.victorySoundPlayed = false;
+        
         this.init();
     }
     
     // Initialize game
     async init() {
         try {
+            // Show loading screen first
+            this.loadingScreen.show(85); // Approximate number of sprites based on sprites.js
+            
             // Load sprites
             await this.spriteManager.loadAllSprites();
+            
+            // Hide loading screen before showing start screen
+            this.loadingScreen.hide();
             
             // Initialize game systems
             this.terrain = new TerrainManager(this.grid, this.spriteManager);
@@ -51,9 +65,9 @@ class Game {
             };
             this.bulletManager = new BulletManager(this.grid, this.spriteManager, this.collision, this.terrain, this.audioManager, this.explosionManager, bulletCallbacks);
             
-            // Initialize player tank at bottom center
-            const playerStartX = 6 * CONSTANTS.TILE_SIZE;
-            const playerStartY = 12 * CONSTANTS.TILE_SIZE;
+            // Initialize player tank at specified position (4,14)
+            const playerStartX = 4 * CONSTANTS.TILE_SIZE;
+            const playerStartY = 14 * CONSTANTS.TILE_SIZE;
             this.playerTank = new PlayerTank(
                 playerStartX, playerStartY,
                 this.grid, this.spriteManager, this.bulletManager, this.collision
@@ -145,11 +159,11 @@ class Game {
                 
                 // Update power-ups
                 this.powerUpManager.update(deltaTime, this.playerTank, this.gameState);
-                
-                // Check game end conditions
-                this.checkGameEndConditions();
             }
         }
+        
+        // Check game end conditions (outside PLAYING state to handle state transitions)
+        this.checkGameEndConditions();
         
         // Update HUD
         this.hud.update(this.playerTank, this.enemyManager);
@@ -176,9 +190,9 @@ class Game {
         this.gameState.loseLife();
         
         if (this.gameState.playerLives > 0) {
-            // Respawn player at safe position (same as initial spawn)
-            const playerStartX = 7 * CONSTANTS.TILE_SIZE;  // Center X position
-            const playerStartY = 10 * CONSTANTS.TILE_SIZE; // Above the eagle base walls
+            // Respawn player at specified position (4,14)  
+            const playerStartX = 4 * CONSTANTS.TILE_SIZE;
+            const playerStartY = 14 * CONSTANTS.TILE_SIZE;
             this.playerTank.respawn(playerStartX, playerStartY);
         }
     }
@@ -186,10 +200,16 @@ class Game {
     // Check game end conditions
     checkGameEndConditions() {
         if (this.gameState.currentState === CONSTANTS.GAME_STATES.GAME_OVER) {
-            this.audioManager.play('gameOver');
+            if (!this.gameOverSoundPlayed) {
+                this.audioManager.play('gameOver');
+                this.gameOverSoundPlayed = true;
+            }
             this.hud.showGameOver();
         } else if (this.gameState.currentState === CONSTANTS.GAME_STATES.VICTORY) {
-            this.audioManager.play('statistics');
+            if (!this.victorySoundPlayed) {
+                this.audioManager.play('statistics');
+                this.victorySoundPlayed = true;
+            }
             this.hud.showVictory();
         }
     }
@@ -198,6 +218,10 @@ class Game {
     startNewGame() {
         this.gameState.startNewGame();
         this.hud.reset();
+        
+        // Reset audio state flags
+        this.gameOverSoundPlayed = false;
+        this.victorySoundPlayed = false;
         
         // Play start sound
         this.audioManager.play('stageStart');
@@ -209,9 +233,9 @@ class Game {
         this.explosionManager.clear();
         this.bulletManager.clear();
         
-        // Reset player - spawn at bottom center in a safe position
-        const playerStartX = 7 * CONSTANTS.TILE_SIZE;  // Center X position
-        const playerStartY = 10 * CONSTANTS.TILE_SIZE; // Above the eagle base walls
+        // Reset player - spawn at specified position (4,14)
+        const playerStartX = 4 * CONSTANTS.TILE_SIZE;
+        const playerStartY = 14 * CONSTANTS.TILE_SIZE;
         this.playerTank.respawn(playerStartX, playerStartY);
         
         // Reset enemies

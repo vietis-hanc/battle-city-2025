@@ -2,7 +2,13 @@
 class HUD {
     constructor(gameState) {
         this.gameState = gameState;
+        this.game = null; // Will be set by the game instance
         this.setupElements();
+    }
+    
+    // Set game reference for restart functionality
+    setGame(game) {
+        this.game = game;
     }
     
     // Setup DOM elements
@@ -106,18 +112,32 @@ class HUD {
         restartElement.className = 'retro-restart-prompt';
         restartElement.textContent = 'PUSH START BUTTON';
         
+        // Desktop restart button
+        const desktopRestartBtn = document.createElement('button');
+        desktopRestartBtn.className = 'desktop-start-button';
+        desktopRestartBtn.textContent = 'RESTART';
+        desktopRestartBtn.onclick = () => {
+            // Direct restart game call
+            if (this.game) {
+                this.game.startNewGame();
+            }
+        };
+
         // Mobile restart button
         const mobileRestartBtn = document.createElement('button');
         mobileRestartBtn.className = 'mobile-start-button';
         mobileRestartBtn.textContent = 'RESTART';
         mobileRestartBtn.onclick = () => {
-            // Trigger restart game
-            document.dispatchEvent(new KeyboardEvent('keydown', { code: 'Enter' }));
+            // Direct restart game call
+            if (this.game) {
+                this.game.startNewGame();
+            }
         };
         
         overlayContent.appendChild(gameOverImg);
         overlayContent.appendChild(scoreElement);
         overlayContent.appendChild(restartElement);
+        overlayContent.appendChild(desktopRestartBtn);
         overlayContent.appendChild(mobileRestartBtn);
         
         overlay.appendChild(overlayContent);
@@ -135,11 +155,11 @@ class HUD {
         const overlayContent = document.createElement('div');
         overlayContent.className = 'retro-overlay-content';
         
-        // Victory flag
-        const flag = document.createElement('img');
-        flag.src = 'images/flag.png';
-        flag.className = 'retro-victory-flag';
-        flag.alt = 'Victory';
+        // Victory logo
+        const logo = document.createElement('img');
+        logo.src = 'images/battle_city.png';
+        logo.className = 'retro-victory-logo';
+        logo.alt = 'Battle City';
         
         // Victory text
         const victoryText = document.createElement('div');
@@ -159,19 +179,33 @@ class HUD {
         restartElement.className = 'retro-restart-prompt';
         restartElement.textContent = 'PUSH START BUTTON';
         
+        // Desktop restart button
+        const desktopRestartBtn = document.createElement('button');
+        desktopRestartBtn.className = 'desktop-start-button';
+        desktopRestartBtn.textContent = 'NEXT GAME';
+        desktopRestartBtn.onclick = () => {
+            // Direct restart game call
+            if (this.game) {
+                this.game.startNewGame();
+            }
+        };
+
         // Mobile restart button  
         const mobileRestartBtn = document.createElement('button');
         mobileRestartBtn.className = 'mobile-start-button';
         mobileRestartBtn.textContent = 'NEXT GAME';
         mobileRestartBtn.onclick = () => {
-            // Trigger restart game
-            document.dispatchEvent(new KeyboardEvent('keydown', { code: 'Enter' }));
+            // Direct restart game call
+            if (this.game) {
+                this.game.startNewGame();
+            }
         };
         
-        overlayContent.appendChild(flag);
+        overlayContent.appendChild(logo);
         overlayContent.appendChild(victoryText);
         overlayContent.appendChild(scoreElement);
         overlayContent.appendChild(restartElement);
+        overlayContent.appendChild(desktopRestartBtn);
         overlayContent.appendChild(mobileRestartBtn);
         
         overlay.appendChild(overlayContent);
@@ -198,9 +232,9 @@ class HUD {
             overlayContent.appendChild(img);
         } else if (type === 'victory') {
             const img = document.createElement('img');
-            img.src = 'images/flag.png';
-            img.className = 'victory-flag';
-            img.alt = 'Victory';
+            img.src = 'images/battle_city.png';
+            img.className = 'victory-logo';
+            img.alt = 'Battle City';
             overlayContent.appendChild(img);
         }
         
@@ -231,8 +265,51 @@ class HUD {
         if (isMobile) {
             this.showMobilePause();
         } else {
-            this.showOverlay('Paused', 'Press ESC to resume', 'pause');
+            this.showDesktopPause();
         }
+    }
+    
+    // Show desktop-specific pause screen with Resume button
+    showDesktopPause() {
+        this.hideOverlay();
+        
+        const overlay = document.createElement('div');
+        overlay.id = 'gameOverlay';
+        overlay.className = 'game-overlay pause retro-start-screen';
+        
+        const overlayContent = document.createElement('div');
+        overlayContent.className = 'retro-overlay-content';
+        
+        const titleElement = document.createElement('div');
+        titleElement.className = 'retro-game-title';
+        titleElement.textContent = 'PAUSED';
+        
+        const messageElement = document.createElement('div');
+        messageElement.className = 'retro-player-text';
+        messageElement.textContent = 'Game is paused';
+        
+        // Add Resume button for desktop
+        const resumeButton = document.createElement('button');
+        resumeButton.className = 'desktop-start-button';
+        resumeButton.textContent = 'RESUME';
+        resumeButton.style.marginTop = '20px';
+        resumeButton.onclick = () => {
+            // Trigger resume by simulating escape key
+            const escEvent = new KeyboardEvent('keydown', { key: 'Escape', code: 'Escape' });
+            document.dispatchEvent(escEvent);
+        };
+        
+        const instructionElement = document.createElement('div');
+        instructionElement.className = 'retro-start-prompt';
+        instructionElement.textContent = 'Press ESC to resume';
+        
+        overlayContent.appendChild(titleElement);
+        overlayContent.appendChild(messageElement);
+        overlayContent.appendChild(resumeButton);
+        overlayContent.appendChild(instructionElement);
+        overlay.appendChild(overlayContent);
+        
+        document.body.appendChild(overlay);
     }
     
     // Show mobile-specific pause screen with Resume button
@@ -326,6 +403,11 @@ class HUD {
         gameTitle.className = 'retro-game-title';
         gameTitle.textContent = 'TANK BATTLE 1990';
         
+        // Challenge subtitle
+        const challengeSubtitle = document.createElement('div');
+        challengeSubtitle.className = 'retro-challenge-subtitle';
+        challengeSubtitle.textContent = 'VietIS AI Challenge 2025';
+        
         const romanOne = document.createElement('div');
         romanOne.className = 'retro-level-indicator';
         const romanImg = document.createElement('img');
@@ -355,22 +437,35 @@ class HUD {
         startPrompt.className = 'retro-start-prompt';
         startPrompt.textContent = 'PUSH START BUTTON';
         
+        // Desktop start button
+        const desktopStartBtn = document.createElement('button');
+        desktopStartBtn.className = 'desktop-start-button';
+        desktopStartBtn.textContent = 'START';
+        desktopStartBtn.onclick = () => {
+            // Direct start game call
+            if (this.game) {
+                this.game.startNewGame();
+            }
+        };
+
         // Mobile start button
         const mobileStartBtn = document.createElement('button');
         mobileStartBtn.className = 'mobile-start-button';
         mobileStartBtn.textContent = 'START';
         mobileStartBtn.onclick = () => {
-            // Trigger start game
-            document.dispatchEvent(new KeyboardEvent('keydown', { code: 'Enter' }));
+            // Direct start game call
+            if (this.game) {
+                this.game.startNewGame();
+            }
         };
         
-        // Assembly
-        overlayContent.appendChild(logo);
         overlayContent.appendChild(gameTitle);
+        overlayContent.appendChild(challengeSubtitle);
         overlayContent.appendChild(romanOne);
         overlayContent.appendChild(playerText);
         overlayContent.appendChild(copyright);
         overlayContent.appendChild(startPrompt);
+        overlayContent.appendChild(desktopStartBtn);
         overlayContent.appendChild(mobileStartBtn);
         
         overlay.appendChild(overlayContent);

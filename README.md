@@ -1,10 +1,11 @@
 
-# vietis-ai-tank-challenge-2025
-# battle-city-2025
+# VietIS AI Tank Challenge 2025 – Battle City 2025
 
+## Demo Online
+[Chơi ngay trên trình duyệt](https://vietis-hanc.github.io/battle-city-2025/game.html)
 
-# Nguồn ảnh, font, âm thanh
-https://github.com/newagebegins/BattleCity/
+## Quét mã QR để chơi trên điện thoại
+![Demo Online Preview](tank_demo_online.png)
 
-# Demo online
-https://vietis-hanc.github.io/battle-city-2025/game.html
+## Nguồn tài nguyên (images/fonts/sound)
+[BattleCity Resources](https://github.com/newagebegins/BattleCity/tree/master)
