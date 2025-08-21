@@ -1,4 +1,19 @@
 /* Loading screen styles */
+
+/* Initially hide game content until loading completes */
+#gameContainer,
+#gameCanvas,
+#hud {
+    display: none;
+}
+
+/* Show game content after loading */
+body.loaded #gameContainer,
+body.loaded #gameCanvas,
+body.loaded #hud {
+    display: block;
+}
+
 .loading-overlay {
     position: fixed;
     top: 0;

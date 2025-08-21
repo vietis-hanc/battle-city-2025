@@ -60,9 +60,9 @@ class Game {
             };
             this.bulletManager = new BulletManager(this.grid, this.spriteManager, this.collision, this.terrain, this.audioManager, this.explosionManager, bulletCallbacks);
             
-            // Initialize player tank at bottom center
-            const playerStartX = 6 * CONSTANTS.TILE_SIZE;
-            const playerStartY = 12 * CONSTANTS.TILE_SIZE;
+            // Initialize player tank at specified position (5,14)
+            const playerStartX = 5 * CONSTANTS.TILE_SIZE;
+            const playerStartY = 14 * CONSTANTS.TILE_SIZE;
             this.playerTank = new PlayerTank(
                 playerStartX, playerStartY,
                 this.grid, this.spriteManager, this.bulletManager, this.collision
@@ -185,9 +185,9 @@ class Game {
         this.gameState.loseLife();
         
         if (this.gameState.playerLives > 0) {
-            // Respawn player at safe position (same as initial spawn)
-            const playerStartX = 7 * CONSTANTS.TILE_SIZE;  // Center X position
-            const playerStartY = 10 * CONSTANTS.TILE_SIZE; // Above the eagle base walls
+            // Respawn player at specified position (5,14)  
+            const playerStartX = 5 * CONSTANTS.TILE_SIZE;
+            const playerStartY = 14 * CONSTANTS.TILE_SIZE;
             this.playerTank.respawn(playerStartX, playerStartY);
         }
     }
@@ -218,9 +218,9 @@ class Game {
         this.explosionManager.clear();
         this.bulletManager.clear();
         
-        // Reset player - spawn at bottom center in a safe position
-        const playerStartX = 7 * CONSTANTS.TILE_SIZE;  // Center X position
-        const playerStartY = 10 * CONSTANTS.TILE_SIZE; // Above the eagle base walls
+        // Reset player - spawn at specified position (5,14)
+        const playerStartX = 5 * CONSTANTS.TILE_SIZE;
+        const playerStartY = 14 * CONSTANTS.TILE_SIZE;
         this.playerTank.respawn(playerStartX, playerStartY);
         
         // Reset enemies
