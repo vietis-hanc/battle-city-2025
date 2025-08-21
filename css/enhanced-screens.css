@@ -1,0 +1,122 @@
+/* Enhanced screens for Tank Battle 1990 */
+
+/* Start Screen Styling */
+.game-overlay.start-screen {
+    background: linear-gradient(135deg, #1a1a2e, #16213e);
+}
+
+.game-overlay.start-screen .overlay-content {
+    background: linear-gradient(145deg, #0f0f23, #1a1a2e);
+    border: 3px solid #ffeb3b;
+    padding: 30px;
+    text-align: center;
+    box-shadow: 0 0 30px rgba(255, 235, 59, 0.3);
+}
+
+.start-screen .title-logo {
+    width: 300px;
+    height: auto;
+    margin-bottom: 20px;
+    image-rendering: pixelated;
+    image-rendering: -moz-crisp-edges;
+    image-rendering: crisp-edges;
+}
+
+.start-screen .instructions {
+    color: #fff;
+    font-size: 14px;
+    line-height: 1.8;
+    margin: 20px 0;
+}
+
+.start-screen .press-enter {
+    color: #ffeb3b;
+    font-size: 16px;
+    animation: blink 1s infinite;
+    margin-top: 20px;
+}
+
+/* Victory Screen Styling */
+.game-overlay.victory {
+    background: linear-gradient(135deg, #1b5e20, #2e7d32);
+}
+
+.game-overlay.victory .overlay-content {
+    background: linear-gradient(145deg, #0d3f0f, #1b5e20);
+    border: 3px solid #4caf50;
+    padding: 40px;
+    text-align: center;
+    box-shadow: 0 0 30px rgba(76, 175, 80, 0.4);
+}
+
+.victory .victory-flag {
+    width: 64px;
+    height: 64px;
+    margin: 0 auto 20px;
+    image-rendering: pixelated;
+    image-rendering: -moz-crisp-edges;
+    image-rendering: crisp-edges;
+}
+
+.victory h2 {
+    color: #4caf50;
+    font-size: 24px;
+    margin-bottom: 20px;
+    text-shadow: 0 0 10px rgba(76, 175, 80, 0.5);
+}
+
+/* Game Over Screen Styling */
+.game-overlay.game-over {
+    background: linear-gradient(135deg, #3f1a1a, #5d1a1a);
+}
+
+.game-overlay.game-over .overlay-content {
+    background: linear-gradient(145deg, #2d0d0d, #3f1a1a);
+    border: 3px solid #f44336;
+    padding: 40px;
+    text-align: center;
+    box-shadow: 0 0 30px rgba(244, 67, 54, 0.4);
+}
+
+.game-over .game-over-image {
+    width: 200px;
+    height: auto;
+    margin: 0 auto 20px;
+    display: block;
+    image-rendering: pixelated;
+    image-rendering: -moz-crisp-edges;
+    image-rendering: crisp-edges;
+}
+
+.game-over h2 {
+    color: #f44336;
+    font-size: 24px;
+    margin-bottom: 20px;
+    text-shadow: 0 0 10px rgba(244, 67, 54, 0.5);
+}
+
+/* Common overlay improvements */
+.overlay-content p {
+    font-size: 12px;
+    line-height: 1.6;
+    margin: 10px 0;
+}
+
+.score-display {
+    font-size: 18px;
+    color: #fff;
+    margin: 15px 0;
+    text-shadow: 0 0 5px rgba(255, 255, 255, 0.3);
+}
+
+.restart-prompt {
+    color: #ffeb3b;
+    font-size: 14px;
+    margin-top: 20px;
+    animation: blink 1.5s infinite;
+}
+
+@keyframes blink {
+    0%, 50% { opacity: 1; }
+    51%, 100% { opacity: 0.4; }
+}
